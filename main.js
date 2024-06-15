@@ -14,26 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
-
-    createBoard()
-
-//  Create a board of keys with their IDs
-    function createBoard(){
-        const gameBoard = document.getElementById("board")
-
-        for (let index = 0; index < 30; index ++){
-            let square = document.createElement("div")
-
-            square.classList.add("square")
-            square.setAttribute("id", index + 1)
-            gameBoard.appendChild(square)
-
-
-        }
-    }
-
-
     // Listen for key press 
     var keys = document.querySelectorAll('button[data-key]');
 
