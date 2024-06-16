@@ -1,99 +1,122 @@
-let row = 0;
-let col = 0;
-const width = 5; // 5 letters/word
-const height = 6; // 6 guesses allowed
+let currentRow = 0;
+let currentCol = 0;
+let score = 0;
+const numAttempts = 6 // also the number of rows
+const numLetters = 5 // number of letters per row
 
 const word = 'react'; // test word
 const guessList = ['trace', 'crate', 'react']; // test word list
 
-const guess = 'trace';
-
-let gameOver = false; 
+let gameOver = false;
+let guess = []
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    document.addEventListener("keydown", (keyboardEvent) => {
+
+        const key = keyboardEvent.key.toUpperCase();
+        if (keyboardEvent.code === `Key${key}` && currentCol < numLetters) {
+            elem = document.getElementById(`r${currentRow}c${currentCol}`)
+            elem.textContent = key.toUpperCase()
+            currentCol++
+            guess.push(key.toLowerCase())
+        } else if (key === 'BACKSPACE' && currentCol > 0) {
+            currentCol--
+            elem = document.getElementById(`r${currentRow}c${currentCol}`)
+            elem.textContent = ''
+            guess.pop();
+        } else if (key === 'ENTER' && currentCol == numLetters) {
+            // process input
 
 
-    // Listen for key press 
-    var keys = document.querySelectorAll('button[data-key]');
+            // if correct, update score and have a new round
 
-    keys.forEach(key => {
-        key.addEventListener('click', () => handleKeyClick(key.dataset.key));
-    });
+           /* score++;
+            resetGrid() */
+            console.log(guess);
+            guess = []
 
-    function handleKeyClick(key) {
-        if (gameOver) return;
 
-        // if (col > 5){
-        //     gameOver = true;
-        //     return true;
-        // }
-        
-      
-        let color = checkIfCorrect(key); 
-        shadeKeyBoard(key, color);
 
-        console.log(`Key clicked: ${key}`);
-        console.log(`Color: ${color}`)
-
-    
-
-        // update the key colors
-    function shadeKeyBoard(letter, color) {
-        document.querySelectorAll('.keyboard-button').forEach(button => {
-            if (button.textContent === letter) {
-                button.style.backgroundColor = color;
+            // if wrong, go to next attempt or exit game
+            currentRow++
+            currentCol = 0;
+            if (currentRow == numAttempts) {
+                gameOver = true
+                score = 0
+                guess =[]
+                resetGrid()
+                // play again
+                // stop event listener
+                // but for now it'll just restart
             }
-        });
-
-
-        row +=1 ;
-        col +1;
-    }
-
-
-    function checkIfCorrect(letter) {
-        
-        // let guessIndex = guess.indexOf(letter);
-        let wordIndex = word.indexOf(letter);
-
-        console.log(`row: ${row}`)
-        console.log(`wordIndex: ${wordIndex}`)
-
-        if (wordIndex == -1) {
-            return 'grey';
-        }
-        else if (wordIndex === row){
-            return 'green';
-        }
-        else{
-            return 'yellow'
         }
 
-        
-    }
-
-    
-
-
-
-
-
-    }
-
-    // document.addEventListener('keydown', (e) => {
-    //     const key = e.key.toLowerCase();
-    //     const keyElement = document.querySelector(`button[data-key="${key}"]`);
-    //     if (keyElement) {
-    //         keyElement.click();
-    //     }
-
-        
-    // })
-
-
-    
+    })
 
 
 });
 
+// clear grid for new attempt or round
+function resetGrid() {
+    currentRow = 0;
+    currentCol = 0;
+    var list = document.getElementsByClassName('row-input');
+    var n;
+    for (n = 0; n < list.length; ++n) {
+        list[n].textContent = '';
+    }
+
+}
+
+
+function handleKeyClick(key) {
+    if (gameOver) return;
+
+    let color = checkIfCorrect(key);
+    shadeKeyBoard(key, color);
+
+    console.log(`Key clicked: ${key}`);
+    console.log(`Color: ${color}`)
+
+}
+
+function checkIfCorrect(letter) {
+    let wordIndex = word.indexOf(letter);
+
+    console.log(`row: ${row}`)
+    console.log(`wordIndex: ${wordIndex}`)
+
+    if (wordIndex == -1) {
+        return '#787c7e';
+    }
+    else if (wordIndex === row) {
+        return '#6aaa64';
+    }
+    else {
+        return '#c9b458'
+    }
+
+
+}
+
+// update the key colors
+function shadeKeyBoard(letter, color) {
+    document.querySelectorAll('.keyboard-button').forEach(button => {
+        if (button.textContent === letter) {
+            button.style.backgroundColor = color;
+        }
+    });
+
+
+    row += 1;
+    col + 1;
+}
+
+
+ // Listen for key press 
+    /* var keys = document.querySelectorAll('button[data-key]');
+ 
+     keys.forEach(key => {
+         key.addEventListener('click', () => handleKeyClick(key.dataset.key));
+     }); */
