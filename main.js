@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
             elem.textContent = ''
             guess.pop();
         } else if (key === 'ENTER' && currentCol == numLetters) {
-            let correctGuess = processGuess(guess)
+            let correctGuess = processAttempt(guess)
             if (correctGuess) {
                 score++;
                 //  resetGrid()
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // input is array, output is boolean
-function processGuess(guess) {
+function processAttempt(guess) {
     guessString = guess.join("") // convert to string
     if (guessString === word) {
         const cells = document.querySelectorAll(`[id^="r${currentRow}"]`);
@@ -69,8 +69,6 @@ function processGuess(guess) {
         return true
     }
     letterCountMap = countLetterOccurrences(word)
-   // guessWordIndexMap = getLetterIndexes(guessString)
-   // guessLetterCountMap = countLetterOccurrences(guessString)
 
     // find the absent letters and letters in correct position
     for (let i = 0; i < guessString.length; i++) {
@@ -110,22 +108,6 @@ function processGuess(guess) {
     }
 
     // check if gameover & output true/false accordingly
-
-
-
-    /* 
-     3. now we know letter is present
-        3.1 if letter is in correct position : green, decrement letter count in dict
-            if i is in wordIndexMap[letter], then guessLetterCountMap[letter]-- and color green
-        3.2 after finding all in correct position, if count == letter count then yellow all of tehm
-        3.3 if count > letter count, then gray out the excess
-
-        if i is in wordIndexMap[letter] : guessLetterCountMap[letter]-- and color green
-        if wordIndexMap[letter] & i not in wordIndexMap[letter] & guessLetterCountMap[letter] > 0 : color yellow
-        if wordIndexMap[letter] & i not in wordIndexMap[letter] & guessLetterCountMap <= 0 : color gray but not keyboard
-
-    */
-
 
 
 }
