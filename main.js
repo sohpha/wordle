@@ -6,8 +6,11 @@ const numLetters = 5 // number of letters per row
 
 const word = 'react'; // test word
 const wordIndexMap = getLetterIndexes(word)
-const letterCountMap = countLetterOccurrences(word)
 const guessList = ['trace', 'crate', 'react']; // test word list
+
+const green = '#6aaa64'
+const yellow = '#c9b458'
+const gray = '#787c7e'
 
 let gameOver = false;
 let guess = [] // stores the user's guess 
@@ -28,10 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
             elem.textContent = ''
             guess.pop();
         } else if (key === 'ENTER' && currentCol == numLetters) {
-            let correctGuess = processWord(guess)
+            let correctGuess = processGuess(guess)
             if (correctGuess) {
                 score++;
-                resetGrid()
+                //  resetGrid()
 
             } else { // if wrong, go to next attempt or exit game
                 currentRow++
@@ -54,6 +57,78 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+// input is array, output is boolean
+function processGuess(guess) {
+    guessString = guess.join("") // convert to string
+    if (guessString === word) {
+        const cells = document.querySelectorAll(`[id^="r${currentRow}"]`);
+        cells.forEach(cell => {
+            cell.style.backgroundColor = green;
+        });
+
+        return true
+    }
+    letterCountMap = countLetterOccurrences(word)
+   // guessWordIndexMap = getLetterIndexes(guessString)
+   // guessLetterCountMap = countLetterOccurrences(guessString)
+
+    // find the absent letters and letters in correct position
+    for (let i = 0; i < guessString.length; i++) {
+        let letter = guessString[i]
+        if (!wordIndexMap[letter]) { // letter not present
+            elem = document.getElementById(`r${currentRow}c${i}`)
+            elem.style.backgroundColor = '#787c7e'
+
+            // also gray out keys on keyboard
+
+        } else if (wordIndexMap[letter].includes(i)) {
+            elem = document.getElementById(`r${currentRow}c${i}`)
+            elem.style.backgroundColor = green
+            letterCountMap[letter]--
+            console.log(letterCountMap[letter])
+            // do something to keyboard
+        }
+    }
+
+    // deal with the yellow letters
+    for (let i = 0; i < guessString.length; i++) {
+        let letter = guessString[i]
+        if (!wordIndexMap[letter] || wordIndexMap[letter].includes(i)) {
+            continue // already handled 
+        } else if (letterCountMap[letter] > 0) {
+            elem = document.getElementById(`r${currentRow}c${i}`)
+            letterCountMap[letter]--
+            elem.style.backgroundColor = yellow
+            // do something to keyboard
+
+        } else {
+            elem = document.getElementById(`r${currentRow}c${i}`)
+            elem.style.backgroundColor = gray
+
+            // don't touch keyboard
+        }
+    }
+
+    // check if gameover & output true/false accordingly
+
+
+
+    /* 
+     3. now we know letter is present
+        3.1 if letter is in correct position : green, decrement letter count in dict
+            if i is in wordIndexMap[letter], then guessLetterCountMap[letter]-- and color green
+        3.2 after finding all in correct position, if count == letter count then yellow all of tehm
+        3.3 if count > letter count, then gray out the excess
+
+        if i is in wordIndexMap[letter] : guessLetterCountMap[letter]-- and color green
+        if wordIndexMap[letter] & i not in wordIndexMap[letter] & guessLetterCountMap[letter] > 0 : color yellow
+        if wordIndexMap[letter] & i not in wordIndexMap[letter] & guessLetterCountMap <= 0 : color gray but not keyboard
+
+    */
+
+
+
+}
 
 // helper functions 
 function countLetterOccurrences(word) {
@@ -98,6 +173,7 @@ function resetGrid() {
     var n;
     for (n = 0; n < list.length; ++n) {
         list[n].textContent = '';
+        list[n].style.backgroundColor = 'white'
     }
 
 }
