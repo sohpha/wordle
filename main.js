@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (correctGuess) {
                 score++;
                 //  resetGrid()
+                // guess new word
 
             } else { // if wrong, go to next attempt or exit game
                 currentRow++
@@ -58,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // input is array, output is boolean
+// return true if user guessed word correctly, false otherwise
 function processAttempt(guess) {
     guessString = guess.join("") // convert to string
     if (guessString === word) {
@@ -65,7 +67,7 @@ function processAttempt(guess) {
         cells.forEach(cell => {
             cell.style.backgroundColor = green;
         });
-
+        score++
         return true
     }
     letterCountMap = countLetterOccurrences(word)
@@ -75,7 +77,7 @@ function processAttempt(guess) {
         let letter = guessString[i]
         if (!wordIndexMap[letter]) { // letter not present
             elem = document.getElementById(`r${currentRow}c${i}`)
-            elem.style.backgroundColor = '#787c7e'
+            elem.style.backgroundColor = gray
 
             // also gray out keys on keyboard
 
@@ -107,7 +109,7 @@ function processAttempt(guess) {
         }
     }
 
-    // check if gameover & output true/false accordingly
+    return false
 
 
 }
