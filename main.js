@@ -1,3 +1,4 @@
+
 let currentRow = 0;
 let currentCol = 0;
 let score = 0;
@@ -6,10 +7,13 @@ let gamesPlayed = 0;
 const numAttempts = 6 // also the number of rows
 const numLetters = 5 // number of letters per row
 
+const guessList = ["awake", "blush", "focal", "evade", "naval", "serve", "heath", "dwarf", "model", "karma", "stink", "grade", "quiet", "bench", "abate", "feign", "major", "death", "fresh", "crust", "stool", "colon", "abase", "marry", "react", "batty", "pride", "floss", "helix", "croak", "staff", "paper", "unfed", "whelp", "trawl", "outdo", "adobe", "crazy", "sower", "repay", "digit", "crate", "cluck", "spike", "mimic", "pound", "maxim", "linen", "unmet", "flesh", "booby", "forth", "first", "stand", "belly", "ivory", "seedy", "print", "yearn", "drain", "bribe", "stout", "panel", "crass", "flume", "offal", "agree", "error", "swirl", "argue", "bleed", "delta", "flick", "totem", "wooer", "front", "shrub", "parry", "biome", "lapel", "start", "greet", "goner", "golem", "lusty", "loopy", "round", "audit", "lying", "gamma", "labor", "islet", "civic", "forge", "corny", "moult", "basic", "salad", "agate", "spicy", "spray", "essay", "fjord", "spend", "kebab", "guild", "aback", "motor", "alone", "hatch", "hyper", "thumb", "dowry", "ought", "belch", "dutch", "pilot", "tweed", "comet", "jaunt", "enema", "steed", "abyss", "growl", "fling", "dozen", "boozy", "erode", "world", "gouge", "click", "briar", "great", "altar", "pulpy", "blurt", "coast", "duchy", "groin", "fixer", "group", "rogue", "badly", "smart", "pithy", "gaudy", "chill", "heron", "vodka", "finer", "surer", "radio", "rouge", "perch", "retch", "wrote", "clock", "tilde", "store", "prove", "bring", "solve", "cheat", "grime", "exult", "usher", "epoch", "triad", "break", "rhino", "viral", "conic", "masse", "sonic", "vital", "trace", "using", "peach", "champ", "baton", "brake", "pluck", "craze", "gripe", "weary", "picky", "acute", "ferry", "aside", "tapir", "troll", "unify", "rebus", "boost", "truss", "siege", "tiger", "banal", "slump", "crank", "gorge", "query", "drink", "favor", "abbey", "tangy", "panic", "solar", "shire", "proxy", "point", "robot", "prick", "wince", "crimp", "knoll", "sugar", "whack", "mount", "perky", "could", "wrung", "light", "those", "moist", "shard", "pleat", "aloft", "skill", "elder", "frame", "humor", "pause", "ulcer", "ultra", "robin", "cynic", "aroma", "caulk", "shake", "dodge", "swill", "tacit", "other", "thorn", "trove", "bloke", "vivid", "spill", "chant", "choke", "rupee", "nasty", "mourn", "ahead", "brine", "cloth", "hoard", "sweet", "month", "lapse", "watch", "today", "focus", "smelt", "tease", "cater", "movie", "saute", "allow", "renew", "their", "slosh", "purge", "chest", "depot", "epoxy", "nymph", "found", "shall", "harry", "stove", "lowly", "snout", "trope", "fewer", "shawl", "natal", "comma", "foray", "scare", "stair", "black", "squad", "royal", "chunk", "mince", "shame", "cheek", "ample", "flair", "foyer", "cargo", "oxide", "plant", "olive", "inert", "askew", "heist", "shown", "zesty", "hasty", "trash", "fella", "larva", "forgo", "story", "hairy", "train", "homer", "badge", "midst", "canny", "fetus", "butch", "farce", "slung", "tipsy", "metal", "yield", "delve", "being", "scour", "glass", "gamer", "scrap", "money", "hinge", "album", "vouch", "asset", "tiara", "crept", "bayou", "atoll", "manor", "creak", "showy", "phase", "froth", "depth", "gloom", "flood", "trait", "girth", "piety", "payer", "goose", "float", "donor", "atone", "primo", "apron", "blown", "cacao", "loser", "input", "gloat", "awful", "brink", "smite", "beady", "rusty", "retro", "droll", "gawky", "hutch", "pinto", "gaily", "egret", "lilac", "sever", "field", "fluff", "hydro", "flack", "agape", "voice", "stead", "stalk", "berth", "madam", "night", "bland", "liver", "wedge", "augur", "roomy", "wacky", "flock", "angry", "bobby", "trite", "aphid", "tryst", "midge", "power", "elope", "cinch", "motto", "stomp", "upset", "bluff", "cramp", "quart", "coyly", "youth", "rhyme", "buggy", "alien", "smear", "unfit", "patty", "cling", "glean", "label", "hunky", "khaki", "poker", "gruel", "twice", "twang", "shrug", "treat", "unlit", "waste", "merit", "woven", "octal", "needy", "clown", "widow", "irony", "ruder", "gauze", "chief", "onset", "prize", "fungi", "charm", "gully", "inter", "whoop", "taunt", "leery", "class", "theme", "lofty", "tibia", "booze", "alpha", "thyme", "eclat", "doubt", "parer", "chute", "stick", "trice", "alike", "sooth", "recap", "saint", "liege", "glory", "grate", "admit", "brisk", "soggy", "usurp", "scald", "scorn", "leave", "twine", "sting", "bough", "marsh", "sloth", "dandy", "vigor", "howdy", "enjoy", "valid", "ionic", "equal", "unset", "floor", "catch", "spade", "stein", "exist", "quirk", "denim", "grove", "spiel", "mummy", "fault", "foggy", "flout", "carry", "sneak", "libel", "waltz", "aptly", "piney", "inept", "aloud", "photo", "dream", "stale", "vomit", "ombre", "fanny", "unite", "snarl", "baker", "there", "glyph", "pooch", "hippy", "spell", "folly", "louse", "gulch", "vault", "godly", "threw", "fleet", "grave"];
 
-const word = 'react'; // test word
+var word = guessList[Math.floor(Math.random()*guessList.length)].toLowerCase();
+console.log(`word: ${word}`)
+
 const wordIndexMap = getLetterIndexes(word)
-const guessList = ['trace', 'crate', 'react']; // test word list
+
 
 const green = '#6aaa64'
 const yellow = '#c9b458'
@@ -18,11 +22,11 @@ const gray = '#787c7e'
 let gameOver = false;
 let guess = [] // stores the user's guess 
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
 
-    document.addEventListener("keydown", (keyboardEvent) => {
+    document.addEventListener('keydown', (keyboardEvent) => {
 
-        guessString = guess.join("") // convert to string
+        guessString = guess.join('') // convert to string
 
         const key = keyboardEvent.key.toUpperCase();
 
@@ -38,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             elem = document.getElementById(`r${currentRow}c${currentCol}`)
             elem.textContent = ''
             guess.pop();
-        } else if (key === 'ENTER' && currentCol == numLetters && guessList.includes(guessString)) {
+        } else if (key === 'ENTER' && currentCol == numLetters) {
             let correctGuess = processAttempt(guess)
             if (correctGuess) {
                 // score++;
@@ -64,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // stop event listener
 
                      // reveal the word
-                    document.getElementById("answer").innerText = word.toUpperCase();
+                    document.getElementById('answer').innerText = word.toUpperCase();
 
                     // play again
                     document.getElementById('playAgainButton').addEventListener('mousedown', playAgain);
@@ -76,12 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
         else if (key === 'ENTER' && currentCol < numLetters) {
+            alert('Too short!');
 
-            alert("Too short!");
-
-        }
-        else if (key === 'ENTER' && currentCol == numLetters && !guessList.includes(guessString)){
-            alert("Not word in list!");
         }
 
     })
@@ -93,9 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // return true if user guessed word correctly, false otherwise
 function processAttempt(guess) {
 
-    guessString = guess.join("") // convert to string
+    guessString = guess.join('') // convert to string
     if (guessString === word) {
-        const cells = document.querySelectorAll(`[id^="r${currentRow}"]`);
+        const cells = document.querySelectorAll(`[id^='r${currentRow}']`);
         cells.forEach(cell => {
             cell.style.backgroundColor = green;
             
@@ -223,7 +223,7 @@ function playAgain() {
 
     // reset keyboard & answer
     resetKeyboard() ;
-    document.getElementById("answer").innerText = '';
+    document.getElementById('answer').innerText = '';
 
     gamesPlayed ++;
     updateScordboard();
@@ -248,9 +248,9 @@ function resetGrid() {
 }
 
 function updateScordboard(){
-    document.getElementById("gamesPlayed").innerText = gamesPlayed;
-    document.getElementById("score").innerText = score;
-    document.getElementById("gamesLost").innerText = gamesPlayed-score;
+    document.getElementById('gamesPlayed').innerText = gamesPlayed;
+    document.getElementById('score').innerText = score;
+    document.getElementById('gamesLost').innerText = gamesPlayed-score;
 
 }
 
