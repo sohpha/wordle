@@ -5,10 +5,12 @@ const numAttempts = 6 // also the number of rows
 const numLetters = 5 // number of letters per row
 
 const word = 'react'; // test word
+const wordIndexMap = getLetterIndexes(word)
+const letterCountMap = countLetterOccurrences(word)
 const guessList = ['trace', 'crate', 'react']; // test word list
 
 let gameOver = false;
-let guess = []
+let guess = [] // stores the user's guess 
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -26,36 +28,67 @@ document.addEventListener("DOMContentLoaded", () => {
             elem.textContent = ''
             guess.pop();
         } else if (key === 'ENTER' && currentCol == numLetters) {
-            // process input
+            let correctGuess = processWord(guess)
+            if (correctGuess) {
+                score++;
+                resetGrid()
 
+            } else { // if wrong, go to next attempt or exit game
+                currentRow++
+                currentCol = 0;
+                if (currentRow == numAttempts) {
+                    gameOver = true
+                    score = 0
+                    resetGrid()
+                    // play again ? 
+                    // stop event listener
+                }
+            }
 
-            // if correct, update score and have a new round
-
-           /* score++;
-            resetGrid() */
-            console.log(guess);
             guess = []
 
-
-
-            // if wrong, go to next attempt or exit game
-            currentRow++
-            currentCol = 0;
-            if (currentRow == numAttempts) {
-                gameOver = true
-                score = 0
-                guess =[]
-                resetGrid()
-                // play again
-                // stop event listener
-                // but for now it'll just restart
-            }
         }
 
     })
 
 
 });
+
+
+// helper functions 
+function countLetterOccurrences(word) {
+    let letterCounts = {};
+
+    for (let i = 0; i < word.length; i++) {
+        let letter = word[i];
+
+        if (letterCounts[letter]) {
+            letterCounts[letter]++;
+        } else {
+            letterCounts[letter] = 1;
+        }
+    }
+
+    return letterCounts;
+
+}
+
+function getLetterIndexes(word) {
+    const letterIndexMap = {};
+
+    for (let i = 0; i < word.length; i++) {
+        const letter = word[i];
+
+        if (letterIndexMap[letter]) {
+            letterIndexMap[letter].push(i);
+        } else {
+            letterIndexMap[letter] = [i];
+        }
+    }
+
+    return letterIndexMap;
+}
+
 
 // clear grid for new attempt or round
 function resetGrid() {
@@ -114,9 +147,9 @@ function shadeKeyBoard(letter, color) {
 }
 
 
- // Listen for key press 
-    /* var keys = document.querySelectorAll('button[data-key]');
+// Listen for key press 
+/* var keys = document.querySelectorAll('button[data-key]');
  
-     keys.forEach(key => {
-         key.addEventListener('click', () => handleKeyClick(key.dataset.key));
-     }); */
+ keys.forEach(key => {
+     key.addEventListener('click', () => handleKeyClick(key.dataset.key));
+ }); */
