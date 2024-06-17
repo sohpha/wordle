@@ -26,9 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const key = keyboardEvent.key.toUpperCase();
 
-        // delete
-        // console.log(`Key clicked: ${key}`);
-        // console.log(`status: ${currentCol < numLetters}`);
         
         if (keyboardEvent.code === `Key${key}` && currentCol < numLetters) {
 
@@ -45,11 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
             let correctGuess = processAttempt(guess)
             if (correctGuess) {
                 // score++;
-                 resetGrid()
+                //  resetGrid()
                  
                 // guess new word
 
-                
+                document.getElementById('playAgainButton').addEventListener('mousedown', playAgain);
 
             } else { // if wrong, go to next attempt or exit game
                 currentRow++
@@ -69,7 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
                      // reveal the word
                     document.getElementById("answer").innerText = word.toUpperCase();
 
-                    document.getElementById('playAgainButton').addEventListener('click', resetGrid);
+                    // play again
+                    document.getElementById('playAgainButton').addEventListener('mousedown', playAgain);
                     
                 }
             }
@@ -82,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Too short!");
 
         }
-        else{
+        else if (key === 'ENTER' && currentCol == numLetters && !guessList.includes(guessString)){
             alert("Not word in list!");
         }
 
@@ -213,8 +211,7 @@ function getLetterIndexes(word) {
 }
 
 
-// clear grid for new attempt or round
-function resetGrid() {
+function playAgain() {
     currentRow = 0;
     currentCol = 0;
     var list = document.getElementsByClassName('row-input');
@@ -230,6 +227,21 @@ function resetGrid() {
 
     gamesPlayed ++;
     updateScordboard();
+
+}
+
+
+
+// clear grid for new attempt or round
+function resetGrid() {
+    currentRow = 0;
+    currentCol = 0;
+    var list = document.getElementsByClassName('row-input');
+    var n;
+    for (n = 0; n < list.length; ++n) {
+        list[n].textContent = '';
+        list[n].style.backgroundColor = 'white'
+    }
 
  
 
