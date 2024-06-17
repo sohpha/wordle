@@ -1,6 +1,8 @@
 let currentRow = 0;
 let currentCol = 0;
 let score = 0;
+let gamesPlayed = 0;
+
 const numAttempts = 6 // also the number of rows
 const numLetters = 5 // number of letters per row
 
@@ -42,8 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (key === 'ENTER' && currentCol == numLetters && guessList.includes(guessString)) {
             let correctGuess = processAttempt(guess)
             if (correctGuess) {
-                score++;
-                //  resetGrid()
+                // score++;
+                 resetGrid()
+                 
                 // guess new word
 
                 
@@ -53,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentCol = 0;
                 if (currentRow == numAttempts) {
                     gameOver = true
-                    score = 0
+                    // score = 0
 
                     // resetGrid()
                 
@@ -67,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById("answer").innerText = word.toUpperCase();
 
                     document.getElementById('playAgainButton').addEventListener('click', resetGrid);
+                    
                 }
             }
 
@@ -223,6 +227,18 @@ function resetGrid() {
     // reset keyboard & answer
     resetKeyboard() ;
     document.getElementById("answer").innerText = '';
+
+    gamesPlayed ++;
+    updateScordboard();
+
+ 
+
+}
+
+function updateScordboard(){
+    document.getElementById("gamesPlayed").innerText = gamesPlayed;
+    document.getElementById("score").innerText = score;
+    document.getElementById("gamesLost").innerText = gamesPlayed-score;
 
 }
 

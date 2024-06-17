@@ -1,11 +1,11 @@
-*{
+* {
     margin: 0;
     padding: 0;
 
 }
 
-html, 
-body{
+html,
+body {
     height: 100%;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
@@ -22,7 +22,7 @@ body{
 }
 
 
-#game{
+#game {
     width: 100%;
     max-width: 500px;
     height: 100%;
@@ -33,7 +33,7 @@ body{
 }
 
 
-.title{
+.title {
     color: white;
     font-size: xx-large;
     font-weight: bold;
@@ -74,18 +74,21 @@ body{
 
 #keyboard-container {
     height: 200px;
+    margin-top: 50px;
 }
 
-.keyboard-row{
+.keyboard-row {
+
     display: flex;
     justify-content: center;
-    width: 100%;
-    margin: 0 auto 8px;
+    width: 50%;
+    margin: 0px auto 8px;
     touch-action: manipulation;
 
 }
 
-.keyboard-row button{
+
+.keyboard-row button {
     font-family: inherit;
     font-weight: bold;
     border: 0;
@@ -95,7 +98,7 @@ body{
     cursor: pointer;
     color: white;
     background-color: rgb(58, 58, 60);
-    
+
 
     flex-grow: 1;
     text-transform: uppercase;
@@ -103,34 +106,37 @@ body{
 
     border-radius: 4px;
     user-select: none;
-    
-    
+
+
 }
 
-.keyboard-row button.wide-button{
+.keyboard-row button.wide-button {
     flex-grow: 1.5;
 
 }
 
 
 .correct {
-    background-color: #6aaa64; /* Correct letter and position */
+    background-color: #6aaa64;
+    /* Correct letter and position */
     color: white;
 }
 
 .present {
-    background-color: #c9b458; /* Correct letter but wrong position */
+    background-color: #c9b458;
+    /* Correct letter but wrong position */
     color: white;
 }
 
 .absent {
-    background-color: #787c7e; /* Incorrect letter */
+    background-color: #787c7e;
+    /* Incorrect letter */
     color: white;
 }
 
 
 
-.row-input{
+.row-input {
     width: 40px;
     height: 40px;
     border: 1px solid black;
@@ -140,7 +146,55 @@ body{
     outline: none;
 }
 
-.answer{
+.answer {
     margin-top: 20px;
     text-align: center;
+}
+
+.container-scordboard {
+    /* margin-top: 20px; */
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    text-align: center;
+
+    background-color: rgb(58, 58, 60);
+    color: white;
+    padding: 40px;
+
+
+}
+
+
+#playAgainButton {
+    margin-top: 20px;
+
+    position: fixed;
+    width: 20%;
+    height: 50px;
+    margin-left: 40%;
+    margin-right: 40%;
+
+    background-color: rgb(58, 58, 60);
+    color: white;
+
+    border: 5px solid green;
+    border-radius: 10px;
+
+
+
+
+
+}
+
+
+.rows {
+
+    width: 20%;
+
+    margin-left: 40%;
+    margin-right: 40%;
 }
