@@ -70,6 +70,16 @@ function processAttempt(guess) {
             cell.style.backgroundColor = green;
             
         });
+
+        for (let i = 0; i < guessString.length; i++) {
+            let letter = guessString[i]
+            
+            let key = letter.toUpperCase()
+            keyColor = document.getElementById(`key${key}`)
+        
+            keyColor.style.backgroundColor = green
+        
+        }
         score++
         return true
     }
@@ -100,7 +110,6 @@ function processAttempt(guess) {
             letterCountMap[letter]--
             console.log(letterCountMap[letter])
             // do something to keyboard
-            console.log('$(keyColor)')
             keyColor.style.backgroundColor = green
         }
     }
