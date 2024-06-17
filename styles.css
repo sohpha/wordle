@@ -93,8 +93,9 @@ body{
     height: 50px;
     width: 50px;
     cursor: pointer;
-    background-color: rgb(58, 58, 60);
     color: white;
+    background-color: rgb(58, 58, 60);
+    
 
     flex-grow: 1;
     text-transform: uppercase;
@@ -137,4 +138,9 @@ body{
     padding: 10px;
     font-size: 16px;
     outline: none;
+}
+
+.answer{
+    margin-top: 20px;
+    text-align: center;
 }

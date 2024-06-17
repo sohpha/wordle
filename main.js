@@ -4,6 +4,7 @@ let score = 0;
 const numAttempts = 6 // also the number of rows
 const numLetters = 5 // number of letters per row
 
+
 const word = 'react'; // test word
 const wordIndexMap = getLetterIndexes(word)
 const guessList = ['trace', 'crate', 'react']; // test word list
@@ -19,7 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener("keydown", (keyboardEvent) => {
 
+        guessString = guess.join("") // convert to string
+
         const key = keyboardEvent.key.toUpperCase();
+
+        // delete
+        // console.log(`Key clicked: ${key}`);
+        // console.log(`status: ${currentCol < numLetters}`);
+        
         if (keyboardEvent.code === `Key${key}` && currentCol < numLetters) {
 
             elem = document.getElementById(`r${currentRow}c${currentCol}`)
@@ -31,12 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
             elem = document.getElementById(`r${currentRow}c${currentCol}`)
             elem.textContent = ''
             guess.pop();
-        } else if (key === 'ENTER' && currentCol == numLetters) {
+        } else if (key === 'ENTER' && currentCol == numLetters && guessList.includes(guessString)) {
             let correctGuess = processAttempt(guess)
             if (correctGuess) {
                 score++;
                 //  resetGrid()
                 // guess new word
+
+                
 
             } else { // if wrong, go to next attempt or exit game
                 currentRow++
@@ -44,14 +54,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (currentRow == numAttempts) {
                     gameOver = true
                     score = 0
-                    resetGrid()
+
+                    // resetGrid()
+                
+                    
+
+
                     // play again ? 
                     // stop event listener
+
+                     // reveal the word
+                    document.getElementById("answer").innerText = word.toUpperCase();
+
+                    document.getElementById('playAgainButton').addEventListener('click', resetGrid);
                 }
             }
 
             guess = []
 
+        }
+        else if (key === 'ENTER' && currentCol < numLetters) {
+
+            alert("Too short!");
+
+        }
+        else{
+            alert("Not word in list!");
         }
 
     })
@@ -71,6 +99,7 @@ function processAttempt(guess) {
             
         });
 
+        // coloring green 
         for (let i = 0; i < guessString.length; i++) {
             let letter = guessString[i]
             
@@ -83,6 +112,8 @@ function processAttempt(guess) {
         score++
         return true
     }
+   
+
     letterCountMap = countLetterOccurrences(word)
 
     // find the absent letters and letters in correct position
@@ -187,6 +218,21 @@ function resetGrid() {
     for (n = 0; n < list.length; ++n) {
         list[n].textContent = '';
         list[n].style.backgroundColor = 'white'
+    }
+
+    // reset keyboard & answer
+    resetKeyboard() ;
+    document.getElementById("answer").innerText = '';
+
+}
+
+
+// clear keyboard 
+function resetKeyboard() {
+    var list = document.getElementsByClassName('keyboard-button');
+    var n;
+    for (n = 0; n < list.length; ++n) {
+        list[n].style.backgroundColor = 'rgb(58, 58, 60)';
     }
 
 }
