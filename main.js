@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const key = keyboardEvent.key.toUpperCase();
         if (keyboardEvent.code === `Key${key}` && currentCol < numLetters) {
+
             elem = document.getElementById(`r${currentRow}c${currentCol}`)
             elem.textContent = key.toUpperCase()
             currentCol++
@@ -61,11 +62,13 @@ document.addEventListener("DOMContentLoaded", () => {
 // input is array, output is boolean
 // return true if user guessed word correctly, false otherwise
 function processAttempt(guess) {
+
     guessString = guess.join("") // convert to string
     if (guessString === word) {
         const cells = document.querySelectorAll(`[id^="r${currentRow}"]`);
         cells.forEach(cell => {
             cell.style.backgroundColor = green;
+            
         });
         score++
         return true
@@ -75,11 +78,21 @@ function processAttempt(guess) {
     // find the absent letters and letters in correct position
     for (let i = 0; i < guessString.length; i++) {
         let letter = guessString[i]
+        
+        let key = letter.toUpperCase()
+        keyColor = document.getElementById(`key${key}`)
+
         if (!wordIndexMap[letter]) { // letter not present
             elem = document.getElementById(`r${currentRow}c${i}`)
+
             elem.style.backgroundColor = gray
 
             // also gray out keys on keyboard
+            keyColor.style.backgroundColor = gray
+
+          
+
+
 
         } else if (wordIndexMap[letter].includes(i)) {
             elem = document.getElementById(`r${currentRow}c${i}`)
@@ -87,12 +100,18 @@ function processAttempt(guess) {
             letterCountMap[letter]--
             console.log(letterCountMap[letter])
             // do something to keyboard
+            console.log('$(keyColor)')
+            keyColor.style.backgroundColor = green
         }
     }
 
     // deal with the yellow letters
     for (let i = 0; i < guessString.length; i++) {
         let letter = guessString[i]
+
+        let key = letter.toUpperCase()
+        keyColor = document.getElementById(`key${key}`)
+
         if (!wordIndexMap[letter] || wordIndexMap[letter].includes(i)) {
             continue // already handled 
         } else if (letterCountMap[letter] > 0) {
@@ -100,6 +119,7 @@ function processAttempt(guess) {
             letterCountMap[letter]--
             elem.style.backgroundColor = yellow
             // do something to keyboard
+            keyColor.style.backgroundColor = yellow
 
         } else {
             elem = document.getElementById(`r${currentRow}c${i}`)
@@ -163,53 +183,53 @@ function resetGrid() {
 }
 
 
-function handleKeyClick(key) {
-    if (gameOver) return;
+// function handleKeyClick(key) {
+//     if (gameOver) return;
 
-    let color = checkIfCorrect(key);
-    shadeKeyBoard(key, color);
+//     let color = checkIfCorrect(key);
+//     shadeKeyBoard(key, color);
 
-    console.log(`Key clicked: ${key}`);
-    console.log(`Color: ${color}`)
+//     console.log(`Key clicked: ${key}`);
+//     console.log(`Color: ${color}`)
 
-}
+// }
 
-function checkIfCorrect(letter) {
-    let wordIndex = word.indexOf(letter);
+// function checkIfCorrect(letter) {
+//     let wordIndex = word.indexOf(letter);
 
-    console.log(`row: ${row}`)
-    console.log(`wordIndex: ${wordIndex}`)
+//     console.log(`row: ${row}`)
+//     console.log(`wordIndex: ${wordIndex}`)
 
-    if (wordIndex == -1) {
-        return '#787c7e';
-    }
-    else if (wordIndex === row) {
-        return '#6aaa64';
-    }
-    else {
-        return '#c9b458'
-    }
-
-
-}
-
-// update the key colors
-function shadeKeyBoard(letter, color) {
-    document.querySelectorAll('.keyboard-button').forEach(button => {
-        if (button.textContent === letter) {
-            button.style.backgroundColor = color;
-        }
-    });
+//     if (wordIndex == -1) {
+//         return '#787c7e';
+//     }
+//     else if (wordIndex === row) {
+//         return '#6aaa64';
+//     }
+//     else {
+//         return '#c9b458'
+//     }
 
 
-    row += 1;
-    col + 1;
-}
+// }
+
+// // update the key colors
+// function shadeKeyBoard(letter, color) {
+//     document.querySelectorAll('.keyboard-button').forEach(button => {
+//         if (button.textContent === letter) {
+//             button.style.backgroundColor = color;
+//         }
+//     });
 
 
-// Listen for key press 
-/* var keys = document.querySelectorAll('button[data-key]');
+//     // row += 1;
+//     // col + 1;
+// }
+
+
+// // Listen for key press 
+// /* var keys = document.querySelectorAll('button[data-key]');
  
- keys.forEach(key => {
-     key.addEventListener('click', () => handleKeyClick(key.dataset.key));
- }); */
+//  keys.forEach(key => {
+//      key.addEventListener('click', () => handleKeyClick(key.dataset.key));
+//  }); */
