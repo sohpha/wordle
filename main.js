@@ -21,8 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     wordIndexMap = getLetterIndexes(word)
     console.log(wordIndexMap)
 
-    document.getElementById('playAgainButton').addEventListener('mousedown', playAgain);
-
     document.addEventListener('keydown', (keyboardEvent) => {
         guessString = guess.join('') // convert to string
         const key = keyboardEvent.key.toUpperCase();
@@ -39,20 +37,24 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (key === 'ENTER' && currentCol < numLetters && !gameOver) {
             alert('Word is too short!');
         } else if (key === 'ENTER' && currentCol == numLetters && !gameOver) {
+            console.log("pressed enter")
             let correctGuess = processAttempt(guess, word, wordIndexMap)
             if (correctGuess) {
                 score++;
+                gameOver = true
+                document.getElementById('playAgainButton').addEventListener('mousedown', playAgain);
             } else { // if wrong, go to next attempt or exit game
                 currentRow++
                 currentCol = 0;
                 if (currentRow == numAttempts) {
                      // reveal the word
                     document.getElementById('answer').innerText = word.toUpperCase();
+                    gameOver = true
+                    document.getElementById('playAgainButton').addEventListener('mousedown', playAgain);
                 }
             }
+            
             guess = []
-            gameOver = true
-            document.getElementById('playAgainButton').addEventListener('mousedown', playAgain);
 
         } 
 
