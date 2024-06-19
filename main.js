@@ -174,7 +174,12 @@ function pickNewWord() {
     // choose new word
     word = WORDS[Math.floor(Math.random() * WORDS.length)].toLowerCase();
     wordIndexMap = getLetterIndexes(word)
-    console.log(`word: ${word}`)
+    
+    /** 
+     * Uncomment next line to view the word in console 
+     *  */
+
+    //console.log(`word: ${word}`)
 }
 
 /**
