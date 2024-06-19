@@ -1,11 +1,10 @@
-# Design System
-This document outlines the design system for the project.
+# Assignment 2: Wordle Game (JavaScript, HTML, CSS)
 
+This document outlines the design system for the web-based game, Wordle. 
 
 
 ## Fonts
-- **Primary Font:** 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-- **Secondary Font:** [Add details here]
+- **Primary Font:** "Poppins", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 
 
 ## Colours
