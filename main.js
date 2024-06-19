@@ -17,9 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // word for first attempt
     word = WORDS[Math.floor(Math.random()*WORDS.length)].toLowerCase();
-    console.log(`word: ${word}`)
     wordIndexMap = getLetterIndexes(word)
-    console.log(wordIndexMap)
 
     document.addEventListener('keydown', (keyboardEvent) => {
         guessString = guess.join('') // convert to string
@@ -37,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (key === 'ENTER' && currentCol < numLetters && !gameOver) {
             alert('Word is too short!');
         } else if (key === 'ENTER' && currentCol == numLetters && !gameOver) {
-            console.log("pressed enter")
             let correctGuess = processAttempt(guess, word, wordIndexMap)
             if (correctGuess) {
                 score++;
@@ -53,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('playAgainButton').addEventListener('mousedown', playAgain);
                 }
             }
-            
+
             guess = []
 
         } 
@@ -66,9 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function pickNewWord() {
     // choose new word
     word = WORDS[Math.floor(Math.random()*WORDS.length)].toLowerCase();
-    console.log(`word: ${word}`)
     wordIndexMap = getLetterIndexes(word)
-    console.log(wordIndexMap)
 
 }
 
@@ -95,8 +90,6 @@ function updateScordboard(){
 // return true if user guessed word correctly, false otherwise
 function processAttempt(guess, word, wordIndexMap) {
 
-    console.log("the word to guess is: ", word)
-    console.log("the guessed word is: ", guess)
     guessString = guess.join('') // convert to string
     if (guessString === word) {
         const cells = document.querySelectorAll(`[id^='r${currentRow}']`);
@@ -123,7 +116,6 @@ function processAttempt(guess, word, wordIndexMap) {
     // find the absent letters and letters in correct position
     for (let i = 0; i < guessString.length; i++) {
         let letter = guessString[i]
-        console.log(`r${currentRow}c${i}`)
         let key = letter.toUpperCase()
         keyColor = document.getElementById(`key${key}`)
 
@@ -145,8 +137,6 @@ function processAttempt(guess, word, wordIndexMap) {
     // deal with the yellow letters
     for (let i = 0; i < guessString.length; i++) {
         let letter = guessString[i]
-        console.log(`r${currentRow}c${i}`)
-
         let key = letter.toUpperCase()
         keyColor = document.getElementById(`key${key}`)
 

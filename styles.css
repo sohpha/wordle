@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    overflow: scroll;
 
 }
 
@@ -8,68 +9,7 @@ html,
 body {
     height: 100%;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
-}
-
-#container {
-    display: flex;
-    background-color: black;
-    height: 100%;
-
-    align-items: center;
-    flex-direction: column;
-
-}
-
-
-#game {
-    width: 100%;
-    max-width: 500px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-
-}
-
-
-.title {
-    color: white;
-    font-size: xx-large;
-    font-weight: bold;
-    text-align: center;
-
-}
-
-
-
-#board-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    overflow: hidden;
-}
-
-
-#board {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
-
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-.square {
-    border: 2px solid rgb(58, 58, 60);
-
-    min-width: 60px;
-    min-height: 60px;
-
-    font-size: medium;
-    font-weight: bold;
-
+    overflow: scroll;
 }
 
 #keyboard-container {
@@ -86,7 +26,6 @@ body {
     touch-action: manipulation;
 
 }
-
 
 .keyboard-row button {
     font-family: inherit;
@@ -106,35 +45,12 @@ body {
 
     border-radius: 4px;
     user-select: none;
-
-
 }
 
 .keyboard-row button.wide-button {
     flex-grow: 1.5;
 
 }
-
-
-.correct {
-    background-color: #6aaa64;
-    /* Correct letter and position */
-    color: white;
-}
-
-.present {
-    background-color: #c9b458;
-    /* Correct letter but wrong position */
-    color: white;
-}
-
-.absent {
-    background-color: #787c7e;
-    /* Incorrect letter */
-    color: white;
-}
-
-
 
 .row-input {
     width: 40px;
@@ -151,7 +67,7 @@ body {
     text-align: center;
 }
 
-.container-scordboard {
+.container-scoreboard {
     /* margin-top: 20px; */
     margin-bottom: 20px;
 
@@ -165,36 +81,23 @@ body {
     color: white;
     padding: 40px;
 
-
 }
-
 
 #playAgainButton {
     margin-top: 20px;
-
-    position: fixed;
     width: 20%;
     height: 50px;
     margin-left: 40%;
     margin-right: 40%;
-
     background-color: rgb(58, 58, 60);
     color: white;
-
+    overflow: scroll;
     border: 5px solid green;
     border-radius: 10px;
-
-
-
-
-
 }
 
-
 .rows {
-
     width: 20%;
-
     margin-left: 40%;
     margin-right: 40%;
 }
