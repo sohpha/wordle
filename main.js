@@ -18,7 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // word for first attempt
     word = WORDS[Math.floor(Math.random() * WORDS.length)].toLowerCase();
     wordIndexMap = getLetterIndexes(word)
-    console.log(`word: ${word}`)
+
+    /** 
+     * Uncomment next line to view the word in console 
+     *  */
+
+    // console.log(`word: ${word}`)
+
+
+    
 
     document.addEventListener('keydown', (keyboardEvent) => {
 
