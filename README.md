@@ -19,3 +19,10 @@ A simple Wordle game built using HTML, CSS and JavaScript
 3. Open index.html in your web browser of choice
 4. Use your physical keyboard to enter guesses and press the "Enter" key to submit an attempt
 
+## Game States
+### Initial State
+![InitialState](docs/design_system/emptyGrid.png)
+### Correct Guess
+![WinningRound](docs/design_system/winningRound.png)
+### Incorrect Guess
+![LosingRound](docs/design_system/losingRound.png)

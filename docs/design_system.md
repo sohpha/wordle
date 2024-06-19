@@ -21,12 +21,11 @@ This document outlines the design system for the project.
 
 
 ## Components
-### Header
-![Header](docs/design_system/scoreboard.png)
+### Header and Scoreboard
+![Header](design_system/scoreboard.png)
 
 
 ### Play Area
-![Component](docs/design_system/playArea.png)
+![InitialState](design_system/emptyGrid.png)
+![Component](design_system/playArea.png)
 
-### Scoreboard
-![Component](docs/design_system/scoreboard.png)
