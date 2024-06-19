@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
     wordIndexMap = getLetterIndexes(word)
 
     document.addEventListener('keydown', (keyboardEvent) => {
+        console.log(`word: ${word}`)
+
+
         guessString = guess.join('') // convert to string
         const key = keyboardEvent.key.toUpperCase();
         if (keyboardEvent.code === `Key${key}` && currentCol < numLetters) {
@@ -216,55 +219,3 @@ function resetKeyboard() {
     }
 
 }
-
-
-// function handleKeyClick(key) {
-//     if (gameOver) return;
-
-//     let color = checkIfCorrect(key);
-//     shadeKeyBoard(key, color);
-
-//     console.log(`Key clicked: ${key}`);
-//     console.log(`Color: ${color}`)
-
-// }
-
-// function checkIfCorrect(letter) {
-//     let wordIndex = word.indexOf(letter);
-
-//     console.log(`row: ${row}`)
-//     console.log(`wordIndex: ${wordIndex}`)
-
-//     if (wordIndex == -1) {
-//         return '#787c7e';
-//     }
-//     else if (wordIndex === row) {
-//         return '#6aaa64';
-//     }
-//     else {
-//         return '#c9b458'
-//     }
-
-
-// }
-
-// // update the key colors
-// function shadeKeyBoard(letter, color) {
-//     document.querySelectorAll('.keyboard-button').forEach(button => {
-//         if (button.textContent === letter) {
-//             button.style.backgroundColor = color;
-//         }
-//     });
-
-
-//     // row += 1;
-//     // col + 1;
-// }
-
-
-// // Listen for key press 
-// /* var keys = document.querySelectorAll('button[data-key]');
- 
-//  keys.forEach(key => {
-//      key.addEventListener('click', () => handleKeyClick(key.dataset.key));
-//  }); */
