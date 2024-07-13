@@ -34,16 +34,10 @@ function processAttempt($guess, $word) {
             //color keyboard gray
             $_SESSION['key_colors'][strtoupper($letter)] = 'green';
         }
-        print_r($_SESSION['cell_colors']);
-        echo "\n";        
-        print_r($_SESSION['key_colors']);
         return true; // correct guess
     }
 
     $letterCounts = countLetterOccurrences($word);
-   // echo "here are the letter counts";
-   // print_r($letterCounts);
-   // echo "this is the guessed word: $guess \n";
 
     // Find the absent letters and letters in correct position
     for($i = 0; $i < strlen($guess); $i++) {
@@ -82,8 +76,7 @@ function processAttempt($guess, $word) {
 
     }
 
-    //echo json_encode($_SESSION['cell_colors']);
-    //echo json_encode($_SESSION['key_colors']);
+    echo json_encode($_SESSION);
     return false; // incorrect guess
     
 }
@@ -95,7 +88,6 @@ function pickNewWord() {
     $word_list = file('words.txt', FILE_IGNORE_NEW_LINES); 
     $_SESSION['word'] = $word_list[array_rand($word_list, 1)];
     $_SESSION['word_indexes'] = getLetterIndexes($_SESSION['word']);
-  //  echo json_encode($_SESSION['word']);
 }
 
 
@@ -112,7 +104,6 @@ function countLetterOccurrences($word) {
 
     }
 
-   // echo json_encode($letterCounts);
     return $letterCounts;
  
 }
@@ -129,7 +120,7 @@ function getLetterIndexes($word) {
             $letterIndexMap[$letter] = [$i];
         }
     }
-    //echo json_encode($letterIndexMap);
+
     return $letterIndexMap;
 }
 
