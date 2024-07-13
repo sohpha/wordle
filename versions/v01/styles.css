@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    overflow: scroll;
+
+}
+
+html,
+body {
+    height: 100%;
+    font-family: 'Poppins', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    overflow: scroll;
+}
+
+#keyboard-container {
+    height: 200px;
+    margin-top: 50px;
+}
+
+.keyboard-row {
+
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: 0px auto 8px;
+    touch-action: manipulation;
+
+}
+
+.keyboard-row button {
+    font-family: inherit;
+    font-weight: bold;
+    border: 0;
+    padding: 0;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(58, 58, 60);
+
+
+    flex-grow: 1;
+    text-transform: uppercase;
+    margin-right: 6px;
+
+    border-radius: 4px;
+    user-select: none;
+}
+
+.keyboard-row button.wide-button {
+    flex-grow: 1.5;
+
+}
+
+.row-input {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+.answer {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.container-scoreboard {
+    /* margin-top: 20px; */
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    text-align: center;
+
+    background-color: rgb(58, 58, 60);
+    color: white;
+    padding: 40px;
+
+}
+
+#playAgainButton {
+    margin-top: 20px;
+    width: 20%;
+    height: 50px;
+    margin-left: 40%;
+    margin-right: 40%;
+    background-color: rgb(58, 58, 60);
+    color: white;
+    overflow: scroll;
+    border: 5px solid green;
+    border-radius: 10px;
+}
+
+.rows {
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+}

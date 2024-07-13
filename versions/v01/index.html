@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="main.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Game</title>
+
+
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js"></script>
+    <script src="words.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Scoreboard -->
+    <div class="container container-scoreboard">
+        <div>Press “Enter” to submit your guess</div>
+        <div>
+            <h2 id="gamesPlayed">0</h2>
+            <b>Games Played</b>
+        </div>
+        <div>
+            <h2 id="score">0</h2>
+            <b>Games Won</b>
+        </div>
+        <div>
+            <h2 id="gamesLost">0</h2>
+            <b>Games Lost</b>
+        </div>
+    </div>
+
+
+    <!-- Word Grid -->
+    <table class="rows">
+        <tr class="row">
+            <td class="row-input" id="r0c0"></td>
+            <td class="row-input" id="r0c1"></td>
+            <td class="row-input" id="r0c2"></td>
+            <td class="row-input" id="r0c3"></td>
+            <td class="row-input" id="r0c4"></td>
+        </tr>
+        <tr class="row">
+            <td class="row-input" id="r1c0"></td>
+            <td class="row-input" id="r1c1"></td>
+            <td class="row-input" id="r1c2"></td>
+            <td class="row-input" id="r1c3"></td>
+            <td class="row-input" id="r1c4"></td>
+        </tr>
+        <tr class="row">
+            <td class="row-input" id="r2c0"></td>
+            <td class="row-input" id="r2c1"></td>
+            <td class="row-input" id="r2c2"></td>
+            <td class="row-input" id="r2c3"></td>
+            <td class="row-input" id="r2c4"></td>
+        </tr>
+        <tr class="row">
+            <td class="row-input" id="r3c0"></td>
+            <td class="row-input" id="r3c1"></td>
+            <td class="row-input" id="r3c2"></td>
+            <td class="row-input" id="r3c3"></td>
+            <td class="row-input" id="r3c4"></td>
+        </tr>
+        <tr class="row">
+            <td class="row-input" id="r4c0"></td>
+            <td class="row-input" id="r4c1"></td>
+            <td class="row-input" id="r4c2"></td>
+            <td class="row-input" id="r4c3"></td>
+            <td class="row-input" id="r4c4"></td>
+        </tr>
+        <tr class="row">
+            <td class="row-input" id="r5c0"></td>
+            <td class="row-input" id="r5c1"></td>
+            <td class="row-input" id="r5c2"></td>
+            <td class="row-input" id="r5c3"></td>
+            <td class="row-input" id="r5c4"></td>
+        </tr>
+
+    </table>
+
+    <!-- Keyboard -->
+    <div id="keyboard-container">
+        <!-- 1 first row of keyboard -->
+        <div class="keyboard-row">
+
+            <button class="keyboard-button" id="keyQ">q</button>
+            <button class="keyboard-button" id="keyW">w</button>
+            <button class="keyboard-button" id="keyE">e</button>
+            <button class="keyboard-button" id="keyR">r</button>
+            <button class="keyboard-button" id="keyT">t</button>
+            <button class="keyboard-button" id="keyY">y</button>
+            <button class="keyboard-button" id="keyU">u</button>
+            <button class="keyboard-button" id="keyI">i</button>
+            <button class="keyboard-button" id="keyO">o</button>
+            <button class="keyboard-button" id="keyP">p</button>
+        </div>
+
+        <!-- 2 second row of keyboard -->
+        <div class="keyboard-row">
+
+            <button class="keyboard-button" id="keyA">a</button>
+            <button class="keyboard-button" id="keyS">s</button>
+            <button class="keyboard-button" id="keyD">d</button>
+            <button class="keyboard-button" id="keyF">f</button>
+            <button class="keyboard-button" id="keyG">g</button>
+            <button class="keyboard-button" id="keyH">h</button>
+            <button class="keyboard-button" id="keyJ">j</button>
+            <button class="keyboard-button" id="keyK">k</button>
+            <button class="keyboard-button" id="keyL">l</button>
+
+        </div>
+
+        <!-- 3 third row of keyboard -->
+        <div class="keyboard-row">
+
+            <!-- <button class="keyboard-button" data-key="del" class="wide-button">Del</button> -->
+            <button class="keyboard-button" id="keyZ">z</button>
+            <button class="keyboard-button" id="keyX">x</button>
+            <button class="keyboard-button" id="keyC">c</button>
+            <button class="keyboard-button" id="keyV">v</button>
+            <button class="keyboard-button" id="keyB">b</button>
+            <button class="keyboard-button" id="keyN">n</button>
+            <button class="keyboard-button" id="keyM">m</button>
+            <!-- <button class="keyboard-button" data-key="enter" class="wide-button">Enter</button> -->
+
+        </div>
+
+    </div>
+
+
+    <div class="answer">
+        <h2 id="answer"></h2>
+    </div>
+
+    <button id="playAgainButton">Play Again</button>
+
+</body>
+
+</html>

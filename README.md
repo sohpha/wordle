@@ -1,4 +1,6 @@
-# Wordle - CSI3140 Assignment 2
+# Wordle - CSI3140
+
+## _**For Assignment 2 grading, please see the ‘versions/v01’ folder which contains the files intended for Assignment 2 submission.**_
 
 A simple Wordle game built using HTML, CSS and JavaScript
 
