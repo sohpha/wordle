@@ -1,19 +1,6 @@
 <?php
 
 session_start();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Page is being refreshed after a POST request
-    if (isset($_SESSION['last_request_method']) && $_SESSION['last_request_method'] == 'POST') {
-        // Reset or clear session variables here as needed
-        unset($_SESSION['current_column']); // Unset specific variable
-        // Or clear all session data:
-        // session_unset(); // Unset all session variables
-        // session_destroy(); // Destroy the session
-    }
-
-    // Update last request method in session
-    $_SESSION['last_request_method'] = 'POST';
-}
 
 header('Content-Type: application/json');
 
@@ -178,15 +165,11 @@ function getLetterIndexes($word)
 }
 
 
-// initializeGame();
-
-
 
 // Initialize game session if not set
 if (!isset($_SESSION['game_state'])) {
     initializeGame();
 }
-
 
 
 
@@ -196,37 +179,35 @@ error_log('$_GET key: ' . $key);
 
 
 
-if ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0 ){
-
-    
-    array_pop($_SESSION['game_state']['guess']);
-    $_SESSION['game_state']['current_column'] --;
-
-
+if ($key == 'reset') {
+    initializeGame();
 }
+elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
 
-elseif ($key == 'enter' &&  $_SESSION['game_state']['current_column'] == NUM_LETTERS - 1 && !$_SESSION['game_state']['game_over']){
+
+    array_pop($_SESSION['game_state']['guess']);
+    $_SESSION['game_state']['current_column']--;
+
+
+} elseif ($key == 'enter' && $_SESSION['game_state']['current_column'] == NUM_LETTERS - 1 && !$_SESSION['game_state']['game_over']) {
     $guessWord = implode("", $_SESSION['game_state']['guess']);
 
-     $correct_guess = processAttempt($guessWord, 'apple');
+    $correct_guess = processAttempt($guessWord, 'apple');
 
 
     // $correct_guess = false;
 
-    if ($correct_guess){
-        $_SESSION['game_state']['score'] ++;
+    if ($correct_guess) {
+        $_SESSION['game_state']['score']++;
         $_SESSION['game_state']['game_over'] = true;
-        
+
         // Play again  to be implemented
-    }
-
-
-    else{
-        $_SESSION['game_state']['current_row'] ++;
+    } else {
+        $_SESSION['game_state']['current_row']++;
         $_SESSION['game_state']['current_column'] = -1;
 
-        if ($_SESSION['game_state']['current_row'] == NUM_ATTEMPTS){
-            
+        if ($_SESSION['game_state']['current_row'] == NUM_ATTEMPTS) {
+
             $_SESSION['game_state']['game_over'] = true;
             // reveal the word
             // revealWord();
@@ -235,15 +216,14 @@ elseif ($key == 'enter' &&  $_SESSION['game_state']['current_column'] == NUM_LET
         }
     }
     $_SESSION['game_state']['guess'] = [];
-    // error_log("Score: ". $_SESSION['game_state']['score']); 
-    // error_log("GameOver? " . $_SESSION['game_state']['game_over'] ? 'true' : 'false');
+    error_log("Score: " . $_SESSION['game_state']['score']);
+    error_log("GameOver? " . $_SESSION['game_state']['game_over'] ? 'true' : 'false');
 
 
-}
-elseif (strlen($key) == 1 && $_SESSION['game_state']['current_column'] < NUM_LETTERS -1 ){
+} elseif (strlen($key) == 1 && $_SESSION['game_state']['current_column'] < NUM_LETTERS - 1) {
 
-    $_SESSION['game_state']['current_column'] ++;
-    $_SESSION['game_state']['guess'] [] = $key;
+    $_SESSION['game_state']['current_column']++;
+    $_SESSION['game_state']['guess'][] = $key;
 
 }
 
@@ -253,13 +233,19 @@ elseif (strlen($key) == 1 && $_SESSION['game_state']['current_column'] < NUM_LET
 $response = [
     'gameState' => $_SESSION['game_state'],
     'currentCol' => $_SESSION['game_state']['current_column'],
-    'currentRow' => $_SESSION['game_state']['current_row'] ,
+    'currentRow' => $_SESSION['game_state']['current_row'],
 
-   
+
 
 ];
+echo json_encode($response);
+
+
+
 
 
 
 // Send JSON response back to JavaScript
-echo json_encode($response);
+// $_SESSION['game_state'] = [];
+// session_destroy();
+
