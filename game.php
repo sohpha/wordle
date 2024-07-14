@@ -181,6 +181,7 @@ $key = $_GET['key'] ?? '';
 if ($key == 'reset') {
     initializeGame();
 }
+
 elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
 
 
@@ -209,11 +210,11 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
             // reveal the word
             // revealWord();
             // Play again  to be implemented
-            // playAgain();
+            playAgain();
         }
     }
     $_SESSION['game_state']['guess'] = [];
-    
+
     // error_log("Score: " . $_SESSION['game_state']['score']);
     // error_log("GameOver? " . $_SESSION['game_state']['game_over'] ? 'true' : 'false');
 
@@ -243,7 +244,15 @@ $response = [
 echo json_encode($response);
 
 
+function playAgain(){
+    $key = $_GET['key'] ?? '';
 
+    if ($key == 'playAgain'){
+        error_log("play again button works");
+    }
+    
+
+}
 
 
 

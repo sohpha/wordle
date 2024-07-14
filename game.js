@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('reset').addEventListener('click', () => {
         resetGame();
     });
+    document.getElementById('playAgainButton').addEventListener('click', () => {
+        playAgain();
+    });
 
     document.addEventListener('keydown', (keyboardEvent) => {
 
@@ -105,15 +108,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             })
     }
+    function playAgain() {
+        fetch(`game.php?key=playAgain`, {
+            method: 'GET',
+
+        })
+            .then(response => response.json())
+            .then(data => {
+                resetGrid();
+                resetKeyboard();
+                document.getElementById('answer').innerText = '';
 
 
+            })
+    }
 
-
-
-
-
-});
-/**
+    /**
  * Clears the guessing grid
  */
 function resetGrid() {
@@ -140,5 +150,14 @@ function resetKeyboard() {
     }
 
 }
+
+
+
+
+
+
+
+});
+
 
 
