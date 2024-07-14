@@ -1,11 +1,12 @@
 body {
     font-family: 'Poppins', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: white;
-    margin: 20px;
+    margin-top: 0;
+    
 }
-h1{
+h1, h3{
     text-align: center;
-    margin: 3rem 3rem;
+    /* margin: 3rem 3rem; */
 
 }
 
