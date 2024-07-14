@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let guess = [] // stores the user's guess 
     document.getElementById('reset').addEventListener('click', () => {
-        console.log("reset button clicked");
         resetGame();
     });
 
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const key = keyboardEvent.key.toUpperCase();
 
         if (keyboardEvent.code === `Key${key}` || key === 'BACKSPACE' || key === 'ENTER') {
-            console.log("Sending key to server:", key);
 
             updateGuess(key.toLowerCase());
         }
@@ -41,12 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 currentCol = data.currentCol;
                 currentRow = data.currentRow;
+                cellColor = data.cellColor;
+                keyColor = data.keyColor;
 
-                console.log('CurrentCol:', currentCol);
-                console.log('CurrentRow:', currentRow);
+                // console.log('CurrentCol:', currentCol);
+                // console.log('CurrentRow:', currentRow);
+                // console.log('cellColor:', cellColor);
+                // console.log('keyColor:', keyColor);
 
 
-                updateUI(key);
+                updateUI(key, cellColor, keyColor);
 
 
 
@@ -55,18 +57,38 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    function updateUI(key) {
+    function updateUI(key, cellColor, keyColor) {
         if (key.toLowerCase() === 'backspace') {
             elem = document.getElementById(`r${currentRow}c${currentCol + 1}`);
             elem.textContent = '';
         } else if (key === `${key}` && key !== 'enter') {
-            console.log("HOHO key: ", key);
+
             if (currentCol === numLetters) {
                 currentCol = numLetters - 1;
             }
             elem = document.getElementById(`r${currentRow}c${currentCol}`);
             elem.textContent = key.toUpperCase();
         }
+
+        // color letter cells
+        // if (cellColor.length > 0){
+        //     for(i = 0; i < cellColor.length; i++){
+        //         elem = document.getElementById(`r${currentRow}c${i}`);
+        //         elem.style.backgroundColor = cellColor[i];
+        //     }
+        // }
+
+  
+        // Color keyboard keys
+        for (let key in keyColor) {
+
+            let keyBackground = document.getElementById(`key${key}`);
+            keyBackground.style.backgroundColor = keyColor[key];
+         
+        }
+
+
+
     }
 
     function resetGame() {
@@ -78,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 resetGrid();
                 resetKeyboard();
+                document.getElementById('answer').innerText = '';
 
 
             })

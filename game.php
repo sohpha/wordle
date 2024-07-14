@@ -175,7 +175,6 @@ if (!isset($_SESSION['game_state'])) {
 
 // Receive guessed letter from $_GET
 $key = $_GET['key'] ?? '';
-error_log('$_GET key: ' . $key);
 
 
 
@@ -194,8 +193,6 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
 
     $correct_guess = processAttempt($guessWord, 'apple');
 
-
-    // $correct_guess = false;
 
     if ($correct_guess) {
         $_SESSION['game_state']['score']++;
@@ -216,8 +213,9 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
         }
     }
     $_SESSION['game_state']['guess'] = [];
-    error_log("Score: " . $_SESSION['game_state']['score']);
-    error_log("GameOver? " . $_SESSION['game_state']['game_over'] ? 'true' : 'false');
+    
+    // error_log("Score: " . $_SESSION['game_state']['score']);
+    // error_log("GameOver? " . $_SESSION['game_state']['game_over'] ? 'true' : 'false');
 
 
 } elseif (strlen($key) == 1 && $_SESSION['game_state']['current_column'] < NUM_LETTERS - 1) {
@@ -229,11 +227,15 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
 
 
 
-
 $response = [
+    
     'gameState' => $_SESSION['game_state'],
     'currentCol' => $_SESSION['game_state']['current_column'],
     'currentRow' => $_SESSION['game_state']['current_row'],
+    'cellColor' => $_SESSION['game_state']['cell_colors'],
+    'keyColor' => $_SESSION['game_state']['key_colors'],
+
+    
 
 
 
