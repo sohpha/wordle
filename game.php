@@ -2,6 +2,7 @@
 
 session_start();
 
+
 header('Content-Type: application/json');
 
 const NUM_ATTEMPTS = 6;
@@ -9,6 +10,7 @@ const NUM_LETTERS = 5;
 const GREEN = '#6aaa64';
 const YELLOW = '#c9b458';
 const GRAY = '#787c7e';
+
 
 // $_SESSION['current_column'] = 0;
 // $current_column = 0;
@@ -30,10 +32,11 @@ function initializeGame()
 {
     $_SESSION["game_state"] = [
         'current_row' => 0,
-        'current_column' => -1,
+        'current_column' => 0,
 
-        // 'word' => pickNewWord(), 
-        'word' => 'apple',
+       
+        'word' => '',
+        // pickNewWord(), 
 
         'score' => 0,
 
@@ -51,6 +54,8 @@ function initializeGame()
 
     ];
 }
+
+
 
 
 
@@ -124,8 +129,10 @@ function processAttempt($guess, $word)
 function pickNewWord()
 {
     $word_list = file('words.txt', FILE_IGNORE_NEW_LINES);
-    $_SESSION['word'] = $word_list[array_rand($word_list, 1)];
-    $_SESSION['word_indexes'] = getLetterIndexes($_SESSION['word']);
+    $_SESSION['game_state']['word'] = $word_list[array_rand($word_list, 1)];
+    $_SESSION['game_state']['word_indexes'] = getLetterIndexes($_SESSION['game_state']['word']);
+
+    error_log("pickNewWord:  ". $_SESSION['game_state']['word']);
 }
 
 
@@ -169,6 +176,7 @@ function getLetterIndexes($word)
 // Initialize game session if not set
 if (!isset($_SESSION['game_state'])) {
     initializeGame();
+    pickNewWord();
 }
 
 
@@ -176,10 +184,14 @@ if (!isset($_SESSION['game_state'])) {
 // Receive guessed letter from $_GET
 $key = $_GET['key'] ?? '';
 
+error_log('$word 2: ' . $_SESSION['game_state']['word']);
 
 
 if ($key == 'reset') {
     initializeGame();
+}
+elseif($key == 'playAgain'){
+    playAgain();
 }
 
 elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
@@ -189,20 +201,26 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
     $_SESSION['game_state']['current_column']--;
 
 
-} elseif ($key == 'enter' && $_SESSION['game_state']['current_column'] == NUM_LETTERS - 1 && !$_SESSION['game_state']['game_over']) {
+} elseif ($key == 'enter' && $_SESSION['game_state']['current_column'] == NUM_LETTERS  && !$_SESSION['game_state']['game_over']) {
     $guessWord = implode("", $_SESSION['game_state']['guess']);
+    $word = $_SESSION['game_state']['word'];
+    error_log('$word: '.$word);
+    error_log('$word: ' . $_SESSION['game_state']['word']);
 
     $correct_guess = processAttempt($guessWord, 'apple');
+
+    // error_log($correct_guess);
 
 
     if ($correct_guess) {
         $_SESSION['game_state']['score']++;
         $_SESSION['game_state']['game_over'] = true;
+        error_log("yes true");
 
         // Play again  to be implemented
     } else {
         $_SESSION['game_state']['current_row']++;
-        $_SESSION['game_state']['current_column'] = -1;
+        $_SESSION['game_state']['current_column'] = 0;
 
         if ($_SESSION['game_state']['current_row'] == NUM_ATTEMPTS) {
 
@@ -219,7 +237,7 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
     // error_log("GameOver? " . $_SESSION['game_state']['game_over'] ? 'true' : 'false');
 
 
-} elseif (strlen($key) == 1 && $_SESSION['game_state']['current_column'] < NUM_LETTERS - 1) {
+} elseif (strlen($key) == 1 && $_SESSION['game_state']['current_column'] < NUM_LETTERS ) {
 
     $_SESSION['game_state']['current_column']++;
     $_SESSION['game_state']['guess'][] = $key;
@@ -245,12 +263,13 @@ echo json_encode($response);
 
 
 function playAgain(){
-    $key = $_GET['key'] ?? '';
+    $_SESSION['game_state']['game_over'] = false;
+    $_SESSION['game_state']['games_played'] ++;
+    $_SESSION['game_state']['guess'] = [];
 
-    if ($key == 'playAgain'){
-        error_log("play again button works");
-    }
-    
+    // pickNewWord();
+
+    // updateScoreboard();
 
 }
 

@@ -66,10 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
             elem.textContent = '';
         } else if (key === `${key}` && key !== 'enter') {
 
-            if (currentCol === numLetters) {
-                currentCol = numLetters - 1;
-            }
-            elem = document.getElementById(`r${currentRow}c${currentCol}`);
+            
+            elem = document.getElementById(`r${currentRow}c${currentCol-1}`);
             elem.textContent = key.toUpperCase();
         }
 
