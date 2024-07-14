@@ -58,6 +58,15 @@ function initializeGame()
 
 
 
+// Initialize game session if not set
+if (!isset($_SESSION['game_state'])) {
+    initializeGame();
+    pickNewWord();
+}
+
+
+
+
 
 // after calling this function, $_SESSION['cell_colors'] will contain
 // the color e/ cell in the current row (i.e. $_SESSION['current_row']) should have and $_SESSION['key_colors'] will
@@ -131,8 +140,6 @@ function pickNewWord()
     $word_list = file('words.txt', FILE_IGNORE_NEW_LINES);
     $_SESSION['game_state']['word'] = $word_list[array_rand($word_list, 1)];
     $_SESSION['game_state']['word_indexes'] = getLetterIndexes($_SESSION['game_state']['word']);
-
-    error_log("pickNewWord:  ". $_SESSION['game_state']['word']);
 }
 
 
@@ -173,23 +180,19 @@ function getLetterIndexes($word)
 
 
 
-// Initialize game session if not set
-if (!isset($_SESSION['game_state'])) {
-    initializeGame();
-    pickNewWord();
-}
-
 
 
 // Receive guessed letter from $_GET
 $key = $_GET['key'] ?? '';
 
-error_log('$word 2: ' . $_SESSION['game_state']['word']);
+
 
 
 if ($key == 'reset') {
     initializeGame();
+    pickNewWord();
 }
+
 elseif($key == 'playAgain'){
     playAgain();
 }
@@ -205,11 +208,10 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
     $guessWord = implode("", $_SESSION['game_state']['guess']);
     $word = $_SESSION['game_state']['word'];
     error_log('$word: '.$word);
-    error_log('$word: ' . $_SESSION['game_state']['word']);
 
-    $correct_guess = processAttempt($guessWord, 'apple');
 
-    // error_log($correct_guess);
+    $correct_guess = processAttempt($guessWord, $word);
+
 
 
     if ($correct_guess) {
