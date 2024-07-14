@@ -98,6 +98,19 @@ body {
     border-radius: 10px;
 }
 
+#reset {
+    margin-top: 15px;
+    width: 10%;
+    height: 50px;
+    margin-left: 60%;
+    margin-right: 20%;
+    background-color: rgb(58, 58, 60);
+    color: white;
+    overflow: scroll;
+    border: 5px solid green;
+    border-radius: 10px;
+}
+
 .rows {
     width: 20%;
     margin-left: 40%;

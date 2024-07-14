@@ -2,15 +2,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentRow = 0;
     let currentCol = 0;
 
+    let gamesPlayed = 0;
+    let score = 0;
+
+    let gameOver = false;
+
+
     const numAttempts = 6 // also the number of rows
     const numLetters = 5 // number of letters per row
 
     let guess = [] // stores the user's guess 
-    document.getElementById('reset').addEventListener('click', () => {
+    document.getElementById('reset').addEventListener('mousedown', () => {
         resetGame();
     });
-    document.getElementById('playAgainButton').addEventListener('click', () => {
+    document.getElementById('playAgainButton').addEventListener('mousedown', () => {
         playAgain();
+        
     });
 
     document.addEventListener('keydown', (keyboardEvent) => {
@@ -42,17 +49,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 currentCol = data.currentCol;
                 currentRow = data.currentRow;
+
                 cellColor = data.cellColor;
                 keyColor = data.keyColor;
+
+                gamesPlayed = data.gamesPlayed;
+                score = data.score;
+
+                gameOver = data.gameOver;
+
+                word = data.word;
+
 
                 // console.log('CurrentCol:', currentCol);
                 // console.log('CurrentRow:', currentRow);
                 // console.log('cellColor:', cellColor);
-                // console.log('keyColor:', keyColor);
+                console.log('keyColor:', keyColor);
 
 
                 updateUI(key, cellColor, keyColor);
 
+                // if game if over, update scoreboard and reveal word
+                if (gameOver){
+                    updateScoreboard(gamesPlayed, score);
+                    document.getElementById('answer').innerText = word.toUpperCase();
+
+                }
+                
 
 
             })
@@ -60,13 +83,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
+
+    function updateScoreboard(gamesPlayed, score){
+        document.getElementById('gamesPlayed').innerText = gamesPlayed;
+        document.getElementById('score').innerText = score;
+        document.getElementById('gamesLost').innerText = gamesPlayed - score;
+    }
+
     function updateUI(key, cellColor, keyColor) {
         if (key.toLowerCase() === 'backspace') {
             elem = document.getElementById(`r${currentRow}c${currentCol + 1}`);
             elem.textContent = '';
         } else if (key === `${key}` && key !== 'enter') {
 
-            
+
             elem = document.getElementById(`r${currentRow}c${currentCol-1}`);
             elem.textContent = key.toUpperCase();
         }
@@ -98,10 +128,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         })
             .then(response => response.json())
-            .then(data => {
+            .then(data => { 
+                
+                gamesPlayed = data.gamesPlayed;
+                score = data.score;
+                
                 resetGrid();
                 resetKeyboard();
                 document.getElementById('answer').innerText = '';
+
+                updateScoreboard(gamesPlayed, score);
 
 
             })
@@ -113,6 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then(data => {
+                cellColor = data.cellColor;
+                keyColor = data.keyColor;
+                
                 resetGrid();
                 resetKeyboard();
                 document.getElementById('answer').innerText = '';

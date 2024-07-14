@@ -216,8 +216,9 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
 
     if ($correct_guess) {
         $_SESSION['game_state']['score']++;
+        $_SESSION['game_state']['games_played'] ++;
+        
         $_SESSION['game_state']['game_over'] = true;
-        error_log("yes true");
 
         // Play again  to be implemented
     } else {
@@ -227,13 +228,13 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
         if ($_SESSION['game_state']['current_row'] == NUM_ATTEMPTS) {
 
             $_SESSION['game_state']['game_over'] = true;
-            // reveal the word
-            // revealWord();
-            // Play again  to be implemented
-            playAgain();
+            $_SESSION['game_state']['games_played'] ++;
         }
+
+        
     }
     $_SESSION['game_state']['guess'] = [];
+    
 
     // error_log("Score: " . $_SESSION['game_state']['score']);
     // error_log("GameOver? " . $_SESSION['game_state']['game_over'] ? 'true' : 'false');
@@ -251,10 +252,19 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
 $response = [
     
     'gameState' => $_SESSION['game_state'],
+
     'currentCol' => $_SESSION['game_state']['current_column'],
     'currentRow' => $_SESSION['game_state']['current_row'],
+
     'cellColor' => $_SESSION['game_state']['cell_colors'],
     'keyColor' => $_SESSION['game_state']['key_colors'],
+
+    'gamesPlayed' => $_SESSION['game_state']['games_played'],
+    'score' => $_SESSION['game_state']['score'],
+
+    'gameOver'  => $_SESSION['game_state']['game_over'],
+
+    'word' =>  $_SESSION['game_state']['word'],
 
     
 
@@ -266,10 +276,17 @@ echo json_encode($response);
 
 function playAgain(){
     $_SESSION['game_state']['game_over'] = false;
-    $_SESSION['game_state']['games_played'] ++;
-    $_SESSION['game_state']['guess'] = [];
+    // $_SESSION['game_state']['games_played'] ++;
 
-    // pickNewWord();
+    // reset
+    $_SESSION['game_state']['guess'] = [];
+    $_SESSION['game_state']['cell_colors'] = [];
+    $_SESSION['game_state']['key_colors'] = [];
+    $_SESSION['game_state']['current_column'] = 0;
+    $_SESSION['game_state']['current_row'] = 0;
+
+
+    pickNewWord();
 
     // updateScoreboard();
 
