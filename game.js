@@ -7,11 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let gameOver = false;
 
+    let topStreaks = [];
+
 
     const numAttempts = 6 // also the number of rows
     const numLetters = 5 // number of letters per row
 
     let guess = [] // stores the user's guess 
+   
+    // document.getElementById('leaderboard').addEventListener('mousedown', () => {
+    //     updateLeaderboard();
+        
+    // });
     document.getElementById('reset').addEventListener('mousedown', () => {
         resetGame();
     });
@@ -19,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         playAgain();
         
     });
+
+    
 
     document.addEventListener('keydown', (keyboardEvent) => {
 
@@ -60,10 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 word = data.word;
 
+                // topStreaks = data.topStreaks;
 
-                // console.log('CurrentCol:', currentCol);
-                // console.log('CurrentRow:', currentRow);
-                // console.log('cellColor:', cellColor);
+
                 console.log('keyColor:', keyColor);
 
 
@@ -83,7 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-
+    
+    
     function updateScoreboard(gamesPlayed, score){
         document.getElementById('gamesPlayed').innerText = gamesPlayed;
         document.getElementById('score').innerText = score;
@@ -132,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 gamesPlayed = data.gamesPlayed;
                 score = data.score;
-                
+
                 resetGrid();
                 resetKeyboard();
                 document.getElementById('answer').innerText = '';

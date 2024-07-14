@@ -1,0 +1,60 @@
+body {
+    font-family: 'Poppins', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: white;
+    margin: 20px;
+}
+h1{
+    text-align: center;
+    margin: 3rem 3rem;
+
+}
+
+
+table {
+    width: 50%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* header */
+th {
+    background-color: green;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* alternating rows */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Style for table cells */
+td {
+    padding: 20px 15px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Hover effect on table rows */
+tr:hover {
+    background-color: #e0e0e0;
+}
+
+#returnButton{
+    margin-top: 15px;
+    width: 10%;
+    height: 50px;
+    margin-left: 10%;
+    /* margin-right: 20%; */
+    background-color: rgb(58, 58, 60);
+    color: white;
+    overflow: scroll;
+    border: 5px solid green;
+    border-radius: 10px;
+}
+

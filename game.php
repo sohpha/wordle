@@ -217,6 +217,8 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
     if ($correct_guess) {
         $_SESSION['game_state']['score']++;
         $_SESSION['game_state']['games_played'] ++;
+        $_SESSION['game_state']['consecutive_wins'] ++;
+
         
         $_SESSION['game_state']['game_over'] = true;
 
@@ -229,6 +231,11 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
 
             $_SESSION['game_state']['game_over'] = true;
             $_SESSION['game_state']['games_played'] ++;
+
+            // add consecutive_wins
+            $consecutive_wins = $_SESSION['game_state']['consecutive_wins'];
+            $_SESSION['game_state']['top_streaks'][] = $consecutive_wins;
+            $_SESSION['game_state']['consecutive_wins'] = 0;
         }
 
         
@@ -265,6 +272,8 @@ $response = [
     'gameOver'  => $_SESSION['game_state']['game_over'],
 
     'word' =>  $_SESSION['game_state']['word'],
+
+    'topStreaks' =>  $_SESSION['game_state']['top_streaks'],
 
     
 
