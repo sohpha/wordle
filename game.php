@@ -50,7 +50,8 @@ function initializeGame()
         'top_streaks' => [],
 
         'cell_colors' => [], // json encoding: {"index":"color", ...}
-        'key_colors' => [] // json enconding: {"key": "color", ...}
+        'key_colors' => [], // json enconding: {"key": "color", ...}
+        'max_letters_reached' => false
 
     ];
 }
@@ -192,8 +193,10 @@ if ($key == 'reset') {
 
     array_pop($_SESSION['game_state']['guess']);
     $_SESSION['game_state']['current_column']--;
+    $_SESSION['game_state']['max_letters_reached'] = false; // reset
 
 } elseif ($key == 'enter' && $_SESSION['game_state']['current_column'] == NUM_LETTERS  && !$_SESSION['game_state']['game_over']) {
+    $_SESSION['game_state']['max_letters_reached'] = false; // reset
     $guessWord = implode("", $_SESSION['game_state']['guess']);
     $word = $_SESSION['game_state']['word'];
     error_log('$word: '.$word);
@@ -236,6 +239,9 @@ if ($key == 'reset') {
     $_SESSION['game_state']['current_column']++;
     $_SESSION['game_state']['guess'][] = $key;
 
+} elseif (strlen($key) == 1 && $_SESSION['game_state']['current_column'] >= NUM_LETTERS) {
+    $_SESSION['game_state']['max_letters_reached'] = true; //do not update ui if user already inputted 5 letters w/o deleting any
+
 }
 
 
@@ -258,6 +264,7 @@ $response = [
     'word' =>  $_SESSION['game_state']['word'],
 
     'topStreaks' =>  $_SESSION['game_state']['top_streaks'],
+    'maxLettersReached' =>  $_SESSION['game_state']['max_letters_reached']
 
 ];
 echo json_encode($response);

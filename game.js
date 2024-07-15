@@ -15,10 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let guess = [] // stores the user's guess 
 
-    // document.getElementById('leaderboard').addEventListener('mousedown', () => {
-    //     updateLeaderboard();
-
-    // });
     document.getElementById('reset').addEventListener('mousedown', () => {
         resetGame();
     });
@@ -60,10 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 gameOver = data.gameOver;
 
                 word = data.word;
+                maxLettersReached = data.maxLettersReached;
 
                 // topStreaks = data.topStreaks;
-
-                updateUI(key, cellColors, keyColors);
+                if(!maxLettersReached) {
+                    updateUI(key, cellColors, keyColors);
+                }
 
                 // if game if over, update scoreboard and reveal word
                 if (gameOver) {
@@ -76,9 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
     };
-
-
-
 
     function updateScoreboard(gamesPlayed, score) {
         document.getElementById('gamesPlayed').innerText = gamesPlayed;
