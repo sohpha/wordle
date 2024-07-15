@@ -205,6 +205,7 @@ if ($key == 'reset') {
         $_SESSION['game_state']['score']++;
         $_SESSION['game_state']['games_played']++;
         $_SESSION['game_state']['consecutive_wins']++;
+        $_SESSION['game_state']['current_row']++; // needed to update ui
         $_SESSION['game_state']['game_over'] = true;
 
         // Play again  to be implemented

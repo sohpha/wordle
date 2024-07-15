@@ -91,17 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
             elem = document.getElementById(`r${currentRow}c${currentCol}`); // HERE
             elem.textContent = '';
         } else if (key === `${key}` && key !== 'enter') {
-            elem = document.getElementById(`r${currentRow}c${currentCol - 1}`); //used to be -1
+            elem = document.getElementById(`r${currentRow}c${currentCol - 1}`); 
             elem.textContent = key.toUpperCase();
         } else {
             // color letter cells
             if (!(Array.isArray(cellColors) && cellColors.length == 0)) {
-                row = gameOver ? currentRow : currentRow - 1; // DONT DELETE
                 for (i = 0; i < 5; i++) {
-                    elem = document.getElementById(`r${row}c${i}`);
+                    elem = document.getElementById(`r${currentRow - 1}c${i}`);
                     index = Array.isArray(cellColors) ? i : i.toString()
-                    //elem.style.backgroundColor = cellColors[i]; 
-                    elem.style.backgroundColor = cellColors[index];
+                    elem.style.backgroundColor = cellColors[index]; 
                 }
             }
 
