@@ -79,11 +79,11 @@ function processAttempt($guess, $word)
     if (strcmp($guess, $word) == 0) {
         for ($i = 0; $i < strlen($guess); $i++) {
             $letter = substr($guess, $i, 1);
-            //color cell gray
-            $_SESSION['game_state']['cell_colors'][$i] = 'green';
+            //color cell green
+            $_SESSION['game_state']['cell_colors'][$i] = GREEN;
 
-            //color keyboard gray
-            $_SESSION['game_state']['key_colors'][strtoupper($letter)] = 'green';
+            //color keyboard green
+            $_SESSION['game_state']['key_colors'][strtoupper($letter)] = GREEN;
         }
         return true; // correct guess
     }
@@ -97,15 +97,15 @@ function processAttempt($guess, $word)
         // letter not present
         if (!isset($_SESSION['game_state']['word_indexes'][$letter])) {
             //color cell gray
-            $_SESSION['game_state']['cell_colors'][$i] = 'gray';
+            $_SESSION['game_state']['cell_colors'][$i] = GRAY;
 
             //color keyboard gray
-            $_SESSION['game_state']['key_colors'][strtoupper($letter)] = 'gray';
+            $_SESSION['game_state']['key_colors'][strtoupper($letter)] = GRAY;
 
         } elseif (in_array($i, $_SESSION['game_state']['word_indexes'][$letter])) {
             $letterCounts[$letter]--;
-            $_SESSION['game_state']['cell_colors'][$i] = 'green';
-            $_SESSION['game_state']['key_colors'][strtoupper($letter)] = 'green';
+            $_SESSION['game_state']['cell_colors'][$i] = GREEN;
+            $_SESSION['game_state']['key_colors'][strtoupper($letter)] = GREEN;
         }
 
     }
@@ -117,11 +117,11 @@ function processAttempt($guess, $word)
             continue;
         } elseif ($letterCounts[$letter] > 0) {
             $letterCounts[$letter]--;
-            $_SESSION['game_state']['cell_colors'][$i] = 'yellow';
-            $_SESSION['game_state']['key_colors'][strtoupper($letter)] = 'yellow';
+            $_SESSION['game_state']['cell_colors'][$i] = YELLOW;
+            $_SESSION['game_state']['key_colors'][strtoupper($letter)] = YELLOW;
 
         } else { // no more occurrences of letter in word
-            $_SESSION['game_state']['cell_colors'][$i] = 'gray';
+            $_SESSION['game_state']['cell_colors'][$i] = GRAY;
         }
 
 
@@ -179,47 +179,32 @@ function getLetterIndexes($word)
 }
 
 
-
-
-
 // Receive guessed letter from $_GET
 $key = $_GET['key'] ?? '';
-
-
 
 
 if ($key == 'reset') {
     initializeGame();
     pickNewWord();
-}
-
-elseif($key == 'playAgain'){
+} elseif($key == 'playAgain'){
     playAgain();
-}
-
-elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
-
+} elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] > 0) { // used to be >=
 
     array_pop($_SESSION['game_state']['guess']);
     $_SESSION['game_state']['current_column']--;
-
 
 } elseif ($key == 'enter' && $_SESSION['game_state']['current_column'] == NUM_LETTERS  && !$_SESSION['game_state']['game_over']) {
     $guessWord = implode("", $_SESSION['game_state']['guess']);
     $word = $_SESSION['game_state']['word'];
     error_log('$word: '.$word);
 
-
+    // need to reset cell_colors and key_colors
     $correct_guess = processAttempt($guessWord, $word);
-
-
 
     if ($correct_guess) {
         $_SESSION['game_state']['score']++;
-        $_SESSION['game_state']['games_played'] ++;
-        $_SESSION['game_state']['consecutive_wins'] ++;
-
-        
+        $_SESSION['game_state']['games_played']++;
+        $_SESSION['game_state']['consecutive_wins']++;
         $_SESSION['game_state']['game_over'] = true;
 
         // Play again  to be implemented
@@ -229,8 +214,9 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
 
         if ($_SESSION['game_state']['current_row'] == NUM_ATTEMPTS) {
 
+            // reveal the word
             $_SESSION['game_state']['game_over'] = true;
-            $_SESSION['game_state']['games_played'] ++;
+            $_SESSION['game_state']['games_played']++;
 
             // add consecutive_wins
             $consecutive_wins = $_SESSION['game_state']['consecutive_wins'];
@@ -238,14 +224,11 @@ elseif ($key == 'backspace' && $_SESSION['game_state']['current_column'] >= 0) {
             $_SESSION['game_state']['consecutive_wins'] = 0;
         }
 
-        
     }
     $_SESSION['game_state']['guess'] = [];
     
-
     // error_log("Score: " . $_SESSION['game_state']['score']);
     // error_log("GameOver? " . $_SESSION['game_state']['game_over'] ? 'true' : 'false');
-
 
 } elseif (strlen($key) == 1 && $_SESSION['game_state']['current_column'] < NUM_LETTERS ) {
 
@@ -263,8 +246,8 @@ $response = [
     'currentCol' => $_SESSION['game_state']['current_column'],
     'currentRow' => $_SESSION['game_state']['current_row'],
 
-    'cellColor' => $_SESSION['game_state']['cell_colors'],
-    'keyColor' => $_SESSION['game_state']['key_colors'],
+    'cellColors' => $_SESSION['game_state']['cell_colors'],
+    'keyColors' => $_SESSION['game_state']['key_colors'],
 
     'gamesPlayed' => $_SESSION['game_state']['games_played'],
     'score' => $_SESSION['game_state']['score'],
@@ -274,10 +257,6 @@ $response = [
     'word' =>  $_SESSION['game_state']['word'],
 
     'topStreaks' =>  $_SESSION['game_state']['top_streaks'],
-
-    
-
-
 
 ];
 echo json_encode($response);
@@ -294,14 +273,11 @@ function playAgain(){
     $_SESSION['game_state']['current_column'] = 0;
     $_SESSION['game_state']['current_row'] = 0;
 
-
     pickNewWord();
 
     // updateScoreboard();
 
 }
-
-
 
 // Send JSON response back to JavaScript
 // $_SESSION['game_state'] = [];

@@ -14,20 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const numLetters = 5 // number of letters per row
 
     let guess = [] // stores the user's guess 
-   
+
     // document.getElementById('leaderboard').addEventListener('mousedown', () => {
     //     updateLeaderboard();
-        
+
     // });
     document.getElementById('reset').addEventListener('mousedown', () => {
         resetGame();
     });
     document.getElementById('playAgainButton').addEventListener('mousedown', () => {
         playAgain();
-        
-    });
 
-    
+    });
 
     document.addEventListener('keydown', (keyboardEvent) => {
 
@@ -38,13 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateGuess(key.toLowerCase());
         }
 
-
-
     })
-
-
-
-
 
 
     function updateGuess(key) {
@@ -59,8 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentCol = data.currentCol;
                 currentRow = data.currentRow;
 
-                cellColor = data.cellColor;
-                keyColor = data.keyColor;
+                cellColors = data.cellColors;
+                keyColors = data.keyColors;
 
                 gamesPlayed = data.gamesPlayed;
                 score = data.score;
@@ -71,19 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // topStreaks = data.topStreaks;
 
-
-                console.log('keyColor:', keyColor);
-
-
-                updateUI(key, cellColor, keyColor);
+                updateUI(key, cellColors, keyColors);
 
                 // if game if over, update scoreboard and reveal word
-                if (gameOver){
+                if (gameOver) {
                     updateScoreboard(gamesPlayed, score);
                     document.getElementById('answer').innerText = word.toUpperCase();
 
                 }
-                
 
 
             })
@@ -91,43 +78,41 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    
-    
-    function updateScoreboard(gamesPlayed, score){
+
+
+    function updateScoreboard(gamesPlayed, score) {
         document.getElementById('gamesPlayed').innerText = gamesPlayed;
         document.getElementById('score').innerText = score;
         document.getElementById('gamesLost').innerText = gamesPlayed - score;
     }
 
-    function updateUI(key, cellColor, keyColor) {
+    function updateUI(key, cellColors, keyColors) {
         if (key.toLowerCase() === 'backspace') {
-            elem = document.getElementById(`r${currentRow}c${currentCol + 1}`);
+            elem = document.getElementById(`r${currentRow}c${currentCol}`); // HERE
             elem.textContent = '';
         } else if (key === `${key}` && key !== 'enter') {
-
-
-            elem = document.getElementById(`r${currentRow}c${currentCol-1}`);
+            elem = document.getElementById(`r${currentRow}c${currentCol - 1}`); //used to be -1
             elem.textContent = key.toUpperCase();
+        } else {
+            // color letter cells
+            if (!(Array.isArray(cellColors) && cellColors.length == 0)) {
+                row = gameOver ? currentRow : currentRow - 1; // DONT DELETE
+                for (i = 0; i < 5; i++) {
+                    elem = document.getElementById(`r${row}c${i}`);
+                    index = Array.isArray(cellColors) ? i : i.toString()
+                    //elem.style.backgroundColor = cellColors[i]; 
+                    elem.style.backgroundColor = cellColors[index];
+                }
+            }
+
+            // Color keyboard keys
+            for (let key in keyColors) {
+
+                let keyBackground = document.getElementById(`key${key}`);
+                keyBackground.style.backgroundColor = keyColors[key];
+
+            }
         }
-
-        // color letter cells
-        // if (cellColor.length > 0){
-        //     for(i = 0; i < cellColor.length; i++){
-        //         elem = document.getElementById(`r${currentRow}c${i}`);
-        //         elem.style.backgroundColor = cellColor[i];
-        //     }
-        // }
-
-  
-        // Color keyboard keys
-        for (let key in keyColor) {
-
-            let keyBackground = document.getElementById(`key${key}`);
-            keyBackground.style.backgroundColor = keyColor[key];
-         
-        }
-
-
 
     }
 
@@ -137,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         })
             .then(response => response.json())
-            .then(data => { 
-                
+            .then(data => {
+
                 gamesPlayed = data.gamesPlayed;
                 score = data.score;
 
@@ -148,9 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 updateScoreboard(gamesPlayed, score);
 
-
             })
     }
+
     function playAgain() {
         fetch(`game.php?key=playAgain`, {
             method: 'GET',
@@ -158,9 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then(data => {
-                cellColor = data.cellColor;
-                keyColor = data.keyColor;
-                
+                cellColors = data.cellColors;
+                keyColors = data.keyColors;
+
                 resetGrid();
                 resetKeyboard();
                 document.getElementById('answer').innerText = '';
@@ -172,35 +157,30 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
  * Clears the guessing grid
  */
-function resetGrid() {
-    currentRow = 0;
-    currentCol = 0;
-    var list = document.getElementsByClassName('row-input');
-    var n;
-    for (n = 0; n < list.length; ++n) {
-        list[n].textContent = '';
-        list[n].style.backgroundColor = 'white'
+    function resetGrid() {
+        currentRow = 0;
+        currentCol = 0;
+        var list = document.getElementsByClassName('row-input');
+        var n;
+        for (n = 0; n < list.length; ++n) {
+            list[n].textContent = '';
+            list[n].style.backgroundColor = 'white'
+        }
+
     }
 
-}
+    /**
+     * Clears the keyboard by resetting all green, gray or yellow keys to 
+     * their initial color
+     */
+    function resetKeyboard() {
+        var list = document.getElementsByClassName('keyboard-button');
+        var n;
+        for (n = 0; n < list.length; ++n) {
+            list[n].style.backgroundColor = 'rgb(58, 58, 60)';
+        }
 
-/**
- * Clears the keyboard by resetting all green, gray or yellow keys to 
- * their initial color
- */
-function resetKeyboard() {
-    var list = document.getElementsByClassName('keyboard-button');
-    var n;
-    for (n = 0; n < list.length; ++n) {
-        list[n].style.backgroundColor = 'rgb(58, 58, 60)';
     }
-
-}
-
-
-
-
-
 
 
 });
