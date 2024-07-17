@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-document.getElementById('returnButton').addEventListener('click', function() {
-    // Navigate to the previous page using JavaScript
-    window.history.back(); // This will take the user back to the previous page in history
-});
+    document.getElementById('returnButton').addEventListener('click', function () {
+        // Navigate to the previous page using JavaScript
+        window.history.back(); // This will take the user back to the previous page in history
+    });
 })
 
 fetch('game.php')

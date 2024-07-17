@@ -1,17 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     let currentRow = 0;
     let currentCol = 0;
-
     let gamesPlayed = 0;
     let score = 0;
-
     let gameOver = false;
-
-    //let topStreaks = [];
-    //const numAttempts = 6 // also the number of rows
-    //const numLetters = 5 // number of letters per row
-
-    let guess = [] // stores the user's guess 
 
     document.getElementById('reset').addEventListener('mousedown', () => {
         resetGame();
@@ -220,27 +212,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function restoreDisplay() {
-        if(sessionStorage.getItem('gamesPlayed') !== null) {document.getElementById('gamesPlayed').innerText = sessionStorage.getItem('gamesPlayed');}
-        if(sessionStorage.getItem('score') !== null) {document.getElementById('score').innerText = sessionStorage.getItem('score')};
-        if(sessionStorage.getItem('gamesLost') !== null) { document.getElementById('gamesLost').innerText = sessionStorage.getItem('gamesLost'); }
-       
+        if (sessionStorage.getItem('gamesPlayed') !== null) { document.getElementById('gamesPlayed').innerText = sessionStorage.getItem('gamesPlayed'); }
+        if (sessionStorage.getItem('score') !== null) { document.getElementById('score').innerText = sessionStorage.getItem('score') };
+        if (sessionStorage.getItem('gamesLost') !== null) { document.getElementById('gamesLost').innerText = sessionStorage.getItem('gamesLost'); }
+
         // null check needed?
         document.getElementById('answer').innerText = sessionStorage.getItem('word')
 
         // if key_colors is not null and has keys: 
         key_colors = JSON.parse(sessionStorage.getItem('key_colors'))
-        if(key_colors !== null && Object.keys(key_colors).length > 0) {
+        if (key_colors !== null && Object.keys(key_colors).length > 0) {
             console.log("restoring key colors...")
             for (let key in key_colors) {
                 let keyBackground = document.getElementById(key);
                 keyBackground.style.backgroundColor = key_colors[key];
-                console.log("restored "+ keyBackground + "color to " + key_colors[key])
+                console.log("restored " + keyBackground + "color to " + key_colors[key])
             }
-        } 
-    
+        }
+
         // if cell_letters is not null and has keys:
         cell_letters = JSON.parse(sessionStorage.getItem('cell_letters'))
-        if(cell_letters !== null && Object.keys(cell_letters).length > 0) {
+        if (cell_letters !== null && Object.keys(cell_letters).length > 0) {
             for (let cell in cell_letters) {
                 let elem = document.getElementById(cell);
                 elem.textContent = cell_letters[cell]
@@ -250,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // if cell_colors is not null and has keys
         cell_colors = JSON.parse(sessionStorage.getItem('cell_colors'))
-        if(cell_colors !== null && Object.keys(cell_colors).length > 0) {
+        if (cell_colors !== null && Object.keys(cell_colors).length > 0) {
             for (let cell in cell_colors) {
                 let elem = document.getElementById(cell)
                 elem.style.backgroundColor = cell_colors[cell]

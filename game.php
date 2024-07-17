@@ -11,53 +11,26 @@ const GREEN = '#6aaa64';
 const YELLOW = '#c9b458';
 const GRAY = '#787c7e';
 
-
-// $_SESSION['current_column'] = 0;
-// $current_column = 0;
-
-// $_SESSION['cell_colors'] = []; // json encoding: {"index":"color", ...}
-// $_SESSION['key_colors'] = []; // json enconding: {"key": "color", ...}
-// $_SESSION['score'] = 0;
-// $_SESSION['games_played'] = 0;
-// $_SESSION['game_over'] = false;
-
-//$_SESSION['word'] = ''; // generate random word
-
-
-
-
-
-
 function initializeGame()
 {
     $_SESSION["game_state"] = [
         'current_row' => 0,
         'current_column' => 0,
-
-       
         'word' => '',
-        // pickNewWord(), 
-
         'score' => 0,
-
         'games_played' => 0,
         'game_over' => false,
-
         'guess' => [],
 
         // wins
         'consecutive_wins' => 0,
         'top_streaks' => [],
-
-        'cell_colors' => [], // json encoding: {"index":"color", ...}
-        'key_colors' => [], // json enconding: {"key": "color", ...}
+        'cell_colors' => [], 
+        'key_colors' => [],
         'max_letters_reached' => false
 
     ];
 }
-
-
-
 
 // Initialize game session if not set
 if (!isset($_SESSION['game_state'])) {
@@ -65,14 +38,6 @@ if (!isset($_SESSION['game_state'])) {
     pickNewWord();
 }
 
-
-
-
-
-// after calling this function, $_SESSION['cell_colors'] will contain
-// the color e/ cell in the current row (i.e. $_SESSION['current_row']) should have and $_SESSION['key_colors'] will
-// contain the color certain keys should have
-// returns true/false depending on whether guess was correct
 function processAttempt($guess, $word)
 {
 
@@ -128,13 +93,10 @@ function processAttempt($guess, $word)
 
     }
 
-    // echo json_encode($_SESSION['game_state']);
     return false; // incorrect guess
 
 }
 
-// pickNewWord();
-// processAttempt("solar",$_SESSION['word']);
 
 function pickNewWord()
 {
@@ -159,7 +121,6 @@ function countLetterOccurrences($word)
     }
 
     return $letterCounts;
-
 }
 
 function getLetterIndexes($word)
@@ -230,9 +191,6 @@ if ($key == 'reset') {
 
     }
     $_SESSION['game_state']['guess'] = [];
-    
-    // error_log("Score: " . $_SESSION['game_state']['score']);
-    // error_log("GameOver? " . $_SESSION['game_state']['game_over'] ? 'true' : 'false');
 
 } elseif (strlen($key) == 1 && $_SESSION['game_state']['current_column'] < NUM_LETTERS ) {
 
@@ -243,7 +201,6 @@ if ($key == 'reset') {
     $_SESSION['game_state']['max_letters_reached'] = true; //do not update ui if user already inputted 5 letters w/o deleting any
 
 }
-
 
 
 $response = [
@@ -272,7 +229,6 @@ echo json_encode($response);
 
 function playAgain(){
     $_SESSION['game_state']['game_over'] = false;
-    // $_SESSION['game_state']['games_played'] ++;
 
     // reset
     $_SESSION['game_state']['guess'] = [];
@@ -283,11 +239,6 @@ function playAgain(){
 
     pickNewWord();
 
-    // updateScoreboard();
-
 }
 
-// Send JSON response back to JavaScript
-// $_SESSION['game_state'] = [];
-// session_destroy();
 
