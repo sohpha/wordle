@@ -2,15 +2,13 @@ body {
     font-family: 'Poppins', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: white;
     margin-top: 0;
-    
+
 }
-h1, h3{
+
+h1, h3 {
     text-align: center;
-    /* margin: 3rem 3rem; */
 
 }
-
-
 table {
     width: 50%;
     margin: 20px auto;
@@ -46,7 +44,7 @@ tr:hover {
     background-color: #e0e0e0;
 }
 
-#returnButton{
+#returnButton {
     margin-top: 15px;
     width: 10%;
     height: 50px;
@@ -58,4 +56,3 @@ tr:hover {
     border: 5px solid green;
     border-radius: 10px;
 }
-
