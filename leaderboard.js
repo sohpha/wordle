@@ -28,7 +28,7 @@ function updateLeaderboard(topStreaks) {
 
     // table headers
     const headerRow = table.insertRow();
-    const headers = ['Rank', '# of Consuctive wins'];
+    const headers = ['Rank', '# of Consecutive wins'];
     headers.forEach(headerText => {
         const header = document.createElement('th');
         const textNode = document.createTextNode(headerText);
