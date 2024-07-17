@@ -220,9 +220,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function restoreDisplay() {
-        document.getElementById('gamesPlayed').innerText = sessionStorage.getItem('gamesPlayed'); // if null make it 0
-        document.getElementById('score').innerText = sessionStorage.getItem('score'); // if null make it 0
-        document.getElementById('gamesLost').innerText = sessionStorage.getItem('gamesLost'); // if null make it 0
+        if(sessionStorage.getItem('gamesPlayed') !== null) {document.getElementById('gamesPlayed').innerText = sessionStorage.getItem('gamesPlayed');}
+        if(sessionStorage.getItem('score') !== null) {document.getElementById('score').innerText = sessionStorage.getItem('score')};
+        if(sessionStorage.getItem('gamesLost') !== null) { document.getElementById('gamesLost').innerText = sessionStorage.getItem('gamesLost'); }
+       
         // null check needed?
         document.getElementById('answer').innerText = sessionStorage.getItem('word')
 
