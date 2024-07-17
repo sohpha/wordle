@@ -153,6 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 resetGrid();
                 resetKeyboard();
+                sessionStorage.setItem('key_colors', JSON.stringify({}))
+                sessionStorage.setItem('cell_letters', JSON.stringify({}))
+                sessionStorage.setItem('cell_colors', JSON.stringify({}))
                 document.getElementById('answer').innerText = '';
                 sessionStorage.setItem('word', '')
 
