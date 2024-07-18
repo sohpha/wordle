@@ -23,7 +23,7 @@ A simple Wordle game built using HTML, CSS, JavaScript and PHP.
 4. In your web browser of choice, navigate to 'http://localhost:8000/index.html'
 5. Use your physical keyboard to enter guesses and press the "Enter" key to submit an attempt
 
-## Testing the Game: Revealing the Word
+## Testing the game: revealing the word
 The word to guess can be found in the game state object outputted in the console. This object is visible after the first keypress in a round of the game.
 
 ## Game States
