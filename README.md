@@ -25,15 +25,12 @@ A simple Wordle game built using HTML, CSS, JavaScript and PHP.
 
 ## Game States
 ### Initial State
-![InitialState](docs/design_system/emptyGrid.png)
+![InitialState](docs/design_system/emptyGrid_assignment3.png)
 ### Correct Guess
-![WinningRound](docs/design_system/winningRound.png)
+![WinningRound](docs/design_system/winningRound_assignment3.png)
 ### Incorrect Guess
-![LosingRound](docs/design_system/losingRound.png)
+![LosingRound](docs/design_system/losingRound_assignment3.png)
 ### Leaderboard
-
-### Alert Message for Short Guess
-![Alert](docs/design_system/alert.png)
 
 
 
