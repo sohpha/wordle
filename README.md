@@ -31,6 +31,7 @@ A simple Wordle game built using HTML, CSS, JavaScript and PHP.
 ### Incorrect Guess
 ![LosingRound](docs/design_system/losingRound_assignment3.png)
 ### Leaderboard
+![Leaderboard](docs/design_system/leaderboard_assignment3.png)
 
 
 
